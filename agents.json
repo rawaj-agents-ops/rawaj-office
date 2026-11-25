@@ -1,0 +1,13 @@
+{
+ "company": "Rawaj Global (رواج): a marketing agency for clinics in the Gulf (UAE, Saudi, Kuwait, Qatar). The founder is based in Cairo, Egypt and starts with zero budget. Services: social media content (Arabic and English), ad creative briefs, posting schedules, lead generation for clinics, client reporting. Goal now: win the first 3 paying clinic clients via about 15 outreach messages per day.",
+ "manager": {"id":"manager","name":"Manager","role":"Compiles everything into the founder's daily report and decides priorities."},
+ "qa": {"id":"qa","name":"QA","role":"Reviews every department output for factual claims that cannot be verified, tone, Arabic quality, medical-advertising risk (no medical claims, no before/after promises, follow Gulf health-ad rules in general terms), and says PASS or FIX with the exact problem."},
+ "agents": [
+  {"id":"research","name":"Research","role":"Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what they care about, what offers work. Today: one concrete insight and one angle for outreach. State clearly which points are general knowledge and not verified."},
+  {"id":"content","name":"Content AR/EN","role":"Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 in English, with hooks and calls to action. No medical claims."},
+  {"id":"design","name":"Design Brief","role":"Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mood. Free tools only (Canva free)."},
+  {"id":"scheduling","name":"Scheduling","role":"Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best slots for clinic audiences in the Gulf."},
+  {"id":"client_success","name":"Client Success","role":"Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a monthly report outline. Today: improve one of those."},
+  {"id":"lead_research","name":"Lead Research","role":"Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arabic) for different clinic types, plus a follow-up message. Do not invent real clinic names or facts; use placeholders like [clinic name]."}
+ ]
+}
