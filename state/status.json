@@ -1,12 +1,12 @@
 {
- "updated": "2026-11-25T23:18:24.397576+02:00",
+ "updated": "2026-11-25T23:22:43.382400+02:00",
  "agents": {
   "research": {
    "name": "Research",
    "state": "failed",
    "task": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "content": {
@@ -14,7 +14,7 @@
    "state": "failed",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "design": {
@@ -22,7 +22,7 @@
    "state": "failed",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "scheduling": {
@@ -30,7 +30,7 @@
    "state": "failed",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "client_success": {
@@ -38,7 +38,7 @@
    "state": "failed",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "lead_research": {
@@ -46,7 +46,7 @@
    "state": "failed",
    "task": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arab",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "qa": {
@@ -54,7 +54,7 @@
    "state": "failed",
    "task": "review",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   },
   "manager": {
@@ -62,7 +62,7 @@
    "state": "failed",
    "task": "daily report",
    "model": null,
-   "at": "2026-11-25T23:18:24.397576+02:00",
+   "at": "2026-11-25T23:22:43.382400+02:00",
    "preview": ""
   }
  }
