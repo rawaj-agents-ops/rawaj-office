@@ -25,8 +25,8 @@ today = now.strftime("%Y-%m-%d")
 cfg = json.load(open("agents.json"))
 
 def call(system, user, aid="research"):
-    for m in PRIORITY.get(aid, PRIORITY["research"]):
-        for attempt in range(1):
+    for m in PRIORITY.get(aid, PRIORITY["research"]) + [LIGHT, "openrouter/free"]:
+        for attempt in range(2):
             try:
                 body = json.dumps({"model": m, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "max_tokens": 1500}).encode()
                 req = urllib.request.Request("https://openrouter.ai/api/v1/chat/completions", body, {"Authorization": "Bearer " + KEY, "Content-Type": "application/json"})
@@ -36,7 +36,8 @@ def call(system, user, aid="research"):
                     return t.strip(), m
             except Exception as e:
                 print("model", m, "failed:", e, file=sys.stderr)
-                time.sleep(5)
+                time.sleep(20 if "429" in str(e) else 5)
+                if "401" in str(e) or "402" in str(e): break
     return None, None
 
 def tg(method, **p):
@@ -98,5 +99,5 @@ if not cid:
 used = "\n".join(f"- {v['name']}: {(v['model'] or 'فشل').replace(':free','')}" for v in status.values())
 text = f"تقرير رواج اليومي - {today}\n\n" + (rep or "النظام اشتغل بس مفيش تقرير طلع النهارده. هراجع المشكلة.") + "\n\nالموديلات المجانية اللي اشتغلوا النهارده:\n" + used
 for i in range(0, len(text), 3800):
-    tg("sendMessage", chat_id=cid, text=text[i:i+3800])
+    print("telegram sent:", tg("sendMessage", chat_id=cid, text=text[i:i+3800]).get("ok"))
 open(sent, "w").write("ok")
