@@ -1,62 +1,77 @@
 <!doctype html>
-<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>مكتب رواج</title>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rawaj Global Office</title>
 <style>
-:root{--floor:#d9c7a3;--wall:#3b4a6b;--ink:#222;--ok:#2ecc71;--bad:#e74c3c;--idle:#95a5a6}
-*{box-sizing:border-box}body{margin:0;background:#1d2433;font-family:system-ui,"Segoe UI",Tahoma,sans-serif;color:#fff}
-header{padding:14px 16px;background:var(--wall);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
-h1{font-size:18px;margin:0}#upd{font-size:12px;opacity:.8}
-#office{max-width:980px;margin:14px auto;padding:14px;background:var(--floor);border:6px solid #8a6d3b;border-radius:6px;
- background-image:linear-gradient(#0000000d 1px,transparent 1px),linear-gradient(90deg,#0000000d 1px,transparent 1px);background-size:32px 32px;
- display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
-.boss{grid-column:1/-1;display:flex;justify-content:center}
-.desk{position:relative;background:#a77b4b;border:3px solid #6b4a24;border-radius:4px;padding:10px 8px 8px;color:var(--ink);cursor:pointer;min-height:176px;image-rendering:pixelated}
-.desk:hover{transform:translateY(-2px)}
-.boss .desk{width:260px}
-.name{font-weight:700;font-size:13px;text-align:center;background:#fff9;border-radius:3px;padding:2px}
-.mon{margin:8px auto 0;width:96px;height:56px;background:#14202e;border:4px solid #333;border-radius:3px;position:relative;overflow:hidden}
-.mon i{position:absolute;left:6px;height:5px;background:#5dd;opacity:.9;border-radius:1px}
-.ok .mon i{animation:t 1.6s steps(6) infinite}
-.bad .mon{background:#3a1010}.idle .mon{background:#1b1b1b}
-@keyframes t{from{width:4px}to{width:70px}}
-.mon i:nth-child(1){top:8px}.mon i:nth-child(2){top:20px;animation-delay:.4s}.mon i:nth-child(3){top:32px;animation-delay:.9s}
-.char{margin:6px auto 0;width:36px;height:44px;position:relative;image-rendering:pixelated}
-.head{position:absolute;left:8px;top:0;width:20px;height:18px;background:#f1c27d;border:2px solid #000;border-radius:3px}
-.hair{position:absolute;left:8px;top:-2px;width:20px;height:8px;background:var(--hair,#2c1b0e);border:2px solid #000;border-radius:3px 3px 0 0}
-.body{position:absolute;left:4px;top:20px;width:28px;height:24px;background:var(--shirt,#3498db);border:2px solid #000;border-radius:3px}
-.ok .char{animation:b 0.8s steps(2) infinite}.bad .char{animation:sh .3s steps(2) infinite}
-@keyframes b{50%{transform:translateY(-2px)}}@keyframes sh{50%{transform:translateX(2px)}}
-.dot{position:absolute;top:8px;left:8px;width:12px;height:12px;border-radius:50%;background:var(--idle);border:2px solid #0006}
-.ok .dot{background:var(--ok)}.bad .dot{background:var(--bad)}
-.bubble{margin-top:6px;font-size:11px;line-height:1.35;background:#fff;border:2px solid #000;border-radius:6px;padding:4px 6px;max-height:48px;overflow:hidden}
-#panel{display:none;position:fixed;inset:auto 0 0 0;background:#fff;color:#222;padding:16px;border-top:4px solid var(--wall);max-height:55vh;overflow:auto}
-#panel h2{margin:0 0 6px;font-size:16px}#panel p{margin:6px 0;font-size:14px;white-space:pre-wrap}#panel button{float:left}
-footer{text-align:center;font-size:11px;opacity:.6;padding:10px}
-</style></head><body>
-<header><h1>🏢 مكتب رواج جلوبال</h1><span id="upd">بيحمّل...</span></header>
-<div id="office"></div>
-<div id="panel"><button onclick="panel.style.display='none'">إغلاق</button><h2 id="pt"></h2><p id="pb"></p></div>
-<footer>الحالة بتتحدّث كل ما الوكلاء يخلّصوا شغلهم (مش بث لحظي)</footer>
-<script>
-const TEAM=[
- {id:"manager",ar:"المدير",role:"بيجمّع التقرير اليومي",shirt:"#8e44ad",hair:"#111",boss:1},
- {id:"research",ar:"الأبحاث",role:"بحث سوق عيادات الخليج",shirt:"#2980b9",hair:"#2c1b0e"},
- {id:"content",ar:"المحتوى عربي/إنجليزي",role:"بوستات جاهزة للنشر",shirt:"#e67e22",hair:"#5a3a1a"},
- {id:"design",ar:"تصميم (Brief)",role:"بريفات تصميم",shirt:"#e84393",hair:"#111"},
- {id:"scheduling",ar:"الجدولة",role:"خطة النشر لـ7 أيام",shirt:"#16a085",hair:"#8a5a2b"},
- {id:"client_success",ar:"نجاح العملاء",role:"أونبوردينج ومتابعة",shirt:"#27ae60",hair:"#222"},
- {id:"lead_research",ar:"بحث العملاء المحتملين",role:"رسائل تواصل للعيادات",shirt:"#c0392b",hair:"#3b2a1a"},
- {id:"qa",ar:"مراجعة الجودة QA",role:"بيراجع كل المخرجات",shirt:"#7f8c8d",hair:"#999"}];
-const $=s=>document.querySelector(s),off=$("#office"),panel=$("#panel");
-function card(t,a){const st=a?(a.state==="done"?"ok":"bad"):"idle";
- const bub=a?(a.state==="done"?"✓ "+(a.preview||"خلّص"):"⚠ حصلت مشكلة في آخر تشغيل"):"💤 لسه ما اشتغلش النهارده";
- const d=document.createElement("div");d.className="desk "+st;d.style.setProperty("--shirt",t.shirt);d.style.setProperty("--hair",t.hair);
- d.innerHTML=`<span class="dot"></span><div class="name">${t.ar}</div><div class="mon"><i></i><i></i><i></i></div><div class="char"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="bubble"></div>`;
- d.querySelector(".bubble").textContent=bub;
- d.onclick=()=>{$("#pt").textContent=t.ar;$("#pb").textContent="المهمة: "+t.role+"\n"+(a?("الحالة: "+(a.state==="done"?"خلّص":"فشل")+"\nالموديل: "+((a.model||"-").replace(":free",""))+"\nآخر تشغيل: "+new Date(a.at).toLocaleString("ar-EG")+"\n\n"+(a.preview||"")):"لسه مفيش تشغيل.");panel.style.display="block"};
- return d}
-fetch("state/status.json?"+Date.now()).then(r=>r.json()).catch(()=>({agents:{}})).then(s=>{
- const ag=s.agents||{};
- $("#upd").textContent=s.updated?("آخر تحديث: "+new Date(s.updated).toLocaleString("ar-EG")):"لسه ما اشتغلش";
- TEAM.forEach(t=>{const c=card(t,ag[t.id]);if(t.boss){const w=document.createElement("div");w.className="boss";w.appendChild(c);off.appendChild(w)}else off.appendChild(c)})});
+html,body{margin:0;height:100%;background:#12161f;color:#e8ecf3;font-family:system-ui,sans-serif;overflow:hidden}
+#top{position:fixed;top:0;left:0;right:0;padding:8px 12px;background:#1d2a44cc;display:flex;justify-content:space-between;font-size:13px;z-index:2}
+#panel{position:fixed;left:8px;right:8px;bottom:8px;background:#1d2a44ee;border-radius:10px;padding:10px 12px;font-size:13px;display:none;max-height:38%;overflow:auto;z-index:2;white-space:pre-wrap}
+#panel b{font-size:15px}
+#msg{position:fixed;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:20px}
+#legend{position:fixed;right:8px;top:40px;font-size:12px;background:#1d2a44cc;border-radius:8px;padding:6px 8px;z-index:2}
+.d{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px}
+</style>
+<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/":"https://unpkg.com/three@0.160.0/examples/jsm/"}}</script>
+</head><body>
+<div id="top"><span>Rawaj Global Office</span><span id="upd">loading...</span></div>
+<div id="legend"><div><span class="d" style="background:#2ecc71"></span>done</div><div><span class="d" style="background:#e74c3c"></span>failed</div><div><span class="d" style="background:#f1c40f"></span>working</div><div><span class="d" style="background:#7f8c8d"></span>no run yet</div></div>
+<div id="panel"></div><div id="msg">Your browser cannot show the 3D office (WebGL is off). The latest status is in the file state/status.json.</div>
+<script type="module">
+import * as THREE from "three";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+const AG0=[
+ {id:"manager",n:"Manager",c:0x8e44ad},{id:"research",n:"Research",c:0x2980b9},{id:"content",n:"Content AR/EN",c:0xe67e22},
+ {id:"design",n:"Design Brief",c:0xe84393},{id:"scheduling",n:"Scheduling",c:0x16a085},{id:"client_success",n:"Client Success",c:0x27ae60},
+ {id:"lead_research",n:"Lead Research",c:0xc0392b},{id:"qa",n:"QA",c:0x95a5a6}];
+const TITLES={manager:["Omar","Operations Manager"],research:["Layla","Market Research Analyst"],content:["Yousef","Content Lead (AR/EN)"],design:["Nour","Design Brief Specialist"],scheduling:["Karim","Scheduling Coordinator"],client_success:["Hala","Client Success Manager"],lead_research:["Tariq","Lead Research Specialist"],qa:["Mariam","QA Lead"]};
+const AG=AG0.map(a=>({...a,n:TITLES[a.id][0]+" · "+TITLES[a.id][1]}));
+const COL={done:0x2ecc71,failed:0xe74c3c,working:0xf1c40f,idle:0x7f8c8d};
+let renderer;
+try{renderer=new THREE.WebGLRenderer({antialias:false,powerPreference:"low-power"});}catch(e){document.getElementById("msg").style.display="flex";throw e}
+renderer.setPixelRatio(Math.min(devicePixelRatio,1.5));renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x12161f);
+const cam=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,0.1,100);cam.position.set(0,13,15);
+const ctl=new OrbitControls(cam,renderer.domElement);ctl.target.set(1.5,0,0);ctl.maxPolarAngle=1.35;ctl.minDistance=6;ctl.maxDistance=30;ctl.enablePan=false;
+scene.add(new THREE.HemisphereLight(0xffffff,0x445566,1.1));
+const sun=new THREE.DirectionalLight(0xffffff,0.8);sun.position.set(5,12,6);scene.add(sun);
+const M=(c)=>new THREE.MeshLambertMaterial({color:c});
+function box(w,h,d,c,x,y,z,p=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),M(c));m.position.set(x,y,z);p.add(m);return m}
+box(22,0.2,14,0xd9c8a0,1,-0.1,0);            // office floor
+box(7,0.22,8,0x5d6d7e,8.2,-0.09,0);           // meeting room floor
+[[-3.6,-6.9,13,0.2],[8.2,-6.9,7,0.2],[-3.6,6.9,13,0.2],[8.2,6.9,7,0.2]].forEach(a=>box(a[2],1.6,a[3],0x8a7a5a,a[0],0.8,a[1]));
+box(0.2,1.6,13.8,0x8a7a5a,-10,0.8,0);box(0.2,1.6,13.8,0x8a7a5a,11.7,0.8,0);box(0.2,1.6,3,0x8a7a5a,4.7,0.8,-5.4);box(0.2,1.6,3,0x8a7a5a,4.7,0.8,5.4);
+box(3.2,0.15,1.6,0x6e4b2a,8.2,1,0);for(let i=0;i<4;i++){box(0.1,0.9,0.1,0x4a3320,7+i*0.8,0.5,0.6)}
+function label(text,color="#fff",w=3.2){const c=document.createElement("canvas");c.width=512;c.height=96;const g=c.getContext("2d");g.fillStyle="#000a";g.fillRect(0,0,512,96);g.fillStyle=color;let fs=44;g.font="bold "+fs+"px sans-serif";while(g.measureText(text).width>480&&fs>18){fs-=2;g.font="bold "+fs+"px sans-serif"}g.textAlign="center";g.textBaseline="middle";g.fillText(text,256,50);
+ const t=new THREE.CanvasTexture(c);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,depthTest:false}));s.scale.set(w,w*96/512,1);s.renderOrder=5;return s}
+const sp=label("MEETING ROOM","#f5cba7",3.4);sp.position.set(8.2,2.6,-3.6);scene.add(sp);
+const desks={},seats=[[7,0,-1.6],[9.4,0,-1.6],[7,0,1.6],[9.4,0,1.6],[6.1,0,0],[10.3,0,0],[8.2,0,-2.4],[8.2,0,2.4]];
+const home=[];AG.forEach((a,i)=>{const col=i%4,row=Math.floor(i/4);home.push([-8.4+col*3.6,0,-3+row*5.2]);});
+const objs={};
+AG.forEach((a,i)=>{const [x,,z]=home[i];const g=new THREE.Group();scene.add(g);
+ box(2.4,0.12,1.2,0x7d5a3a,x,0.9,z-0.4,g);box(0.12,0.9,0.12,0x4a3320,x-1,0.45,z-0.8,g);box(0.12,0.9,0.12,0x4a3320,x+1,0.45,z-0.8,g);
+ const mon=box(0.9,0.6,0.08,0x111111,x,1.35,z-0.8,g);const scr=box(0.8,0.5,0.02,COL.idle,x,1.35,z-0.75,g);scr.material=new THREE.MeshBasicMaterial({color:COL.idle});
+ const p=new THREE.Group();p.position.set(x,0,z+0.6);g.add(p);
+ box(0.6,0.8,0.4,a.c,0,0.9,0,p);const head=new THREE.Mesh(new THREE.SphereGeometry(0.28,10,8),M(0xf0c8a0));head.position.set(0,1.55,0);p.add(head);
+ const L=label(a.n,"#fff",3.4);L.position.set(x,2.5,z);g.add(L);
+ const dot=new THREE.Mesh(new THREE.SphereGeometry(0.14,8,6),new THREE.MeshBasicMaterial({color:COL.idle}));dot.position.set(x+1.1,2.5,z);g.add(dot);
+ objs[a.id]={g,p,scr,dot,home:new THREE.Vector3(x,0,z+0.6),target:new THREE.Vector3(x,0,z+0.6),a,st:null,hit:[p.children[0],p.children[1],scr]};});
+const ray=new THREE.Raycaster(),mouse=new THREE.Vector2(),panel=document.getElementById("panel");
+function pick(e){const r=renderer.domElement.getBoundingClientRect();mouse.set(((e.clientX-r.left)/r.width)*2-1,-((e.clientY-r.top)/r.height)*2+1);ray.setFromCamera(mouse,cam);
+ const all=Object.values(objs).flatMap(o=>o.hit);const h=ray.intersectObjects(all)[0];if(!h){panel.style.display="none";return}
+ const o=Object.values(objs).find(o=>o.hit.includes(h.object));show(o)}
+let down=null;renderer.domElement.addEventListener("pointerdown",e=>down=[e.clientX,e.clientY]);
+renderer.domElement.addEventListener("pointerup",e=>{if(down&&Math.hypot(e.clientX-down[0],e.clientY-down[1])<6)pick(e)});
+function show(o){const s=o.st||{};panel.style.display="block";panel.innerHTML=`<b>${o.a.n}</b>\nStatus: ${s.state||"no run yet"}${o.inMeeting?" (in meeting room)":""}\nModel: ${(s.model||"-").replace(":free","")}\nTask: ${s.task||"-"}\nLast run: ${s.at||"-"}\n\n${s.preview||""}`}
+async function load(){try{const r=await fetch("state/status.json?"+Date.now());const d=await r.json();
+ document.getElementById("upd").textContent=d.updated?"Last update: "+new Date(d.updated).toLocaleString("en-GB"):"no run yet";
+ const A=d.agents||{};const qa=A.qa||{};const flagged=Array.isArray(qa.flagged)?qa.flagged:[];
+ const meet=new Set(flagged.length?["qa","manager",...flagged]:[]);let k=0;
+ for(const a of AG){const o=objs[a.id];const s=A[a.id];o.st=s||null;const state=s?(s.state==="working"?"working":s.state==="done"?"done":"failed"):"idle";
+  o.scr.material.color.setHex(COL[state]);o.dot.material.color.setHex(COL[state]);
+  o.inMeeting=meet.has(a.id);if(o.inMeeting){const t=seats[k++%seats.length];o.target.set(t[0],0,t[2])}else o.target.copy(o.home);}
+ }catch(e){document.getElementById("upd").textContent="status unavailable"}}
+load();setInterval(load,60000);
+addEventListener("resize",()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+function loop(){for(const o of Object.values(objs)){o.p.position.lerp(o.target.clone().sub(o.g.position),0.06)}ctl.update();renderer.render(scene,cam);requestAnimationFrame(loop)}
+loop();
 </script></body></html>
