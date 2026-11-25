@@ -85,7 +85,9 @@ for a in cfg["agents"]:
     print(a["id"], status[a["id"]]["state"])
 bundle = "\n\n".join(f"### {k}\n{v}" for k, v in outputs.items() if v)
 qa, qm = call(f"You are the QA agent at {cfg['company']}\n{cfg['qa']['role']}", "Review these outputs. For each department give PASS or FIX plus one line.\n\n" + bundle, "qa")
-status["qa"] = {"name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
+import re
+flagged = [x["id"] for x in cfg["agents"] if qa and re.search(re.escape(x["id"]) + r"\W{0,12}FIX", qa, re.I)] if isinstance(cfg.get("agents"), list) else []
+status["qa"] = {"flagged": flagged, "name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
 rep, rm = call(
     f"You are the Manager agent at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic (عامية مصرية), friendly and short. Structure: 1) one line summary, 2) a line or two per department about what it produced today and the best item, 3) QA verdict, 4) the top 3 actions for the founder today (concrete, start with sending the outreach messages), 5) anything that needs his decision. Plain text, no markdown symbols. Be honest: say when something failed or is unverified.",
     "Department outputs:\n\n" + bundle + "\n\nQA review:\n" + (qa or "QA failed"), "manager")
@@ -93,6 +95,8 @@ status["manager"] = {"name": "Manager", "state": "done" if rep else "failed", "t
 os.makedirs("out", exist_ok=True)
 open(f"out/{today}.md", "w").write(f"# Rawaj daily {today}\n\n## Report\n{rep}\n\n## QA\n{qa}\n\n## Outputs\n{bundle}\n")
 json.dump({"updated": now.isoformat(), "agents": status}, open("state/status.json", "w"), ensure_ascii=False, indent=1)
+if os.path.exists(sent):
+    print("report already sent today: status updated, no second Telegram message"); sys.exit(0)
 cid = chat_id()
 if not cid:
     print("no chat id yet: user must press Start on the bot"); sys.exit(0)
