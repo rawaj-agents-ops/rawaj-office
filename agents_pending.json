@@ -1,0 +1,5 @@
+{
+ "status": "pending_selection",
+ "note": "On-demand agent. NOT read by run.py, never part of the daily cron. The founder picks one candidate; the pick is then promoted into agents.json as on_demand and invoked only by manual workflow_dispatch (input: agent=accountant, task=text).",
+ "accountant": {"activates_when": "money moves: first client payment, invoice, expense, pricing change", "role": "Tracks revenue and expenses in USD and EGP, prepares invoices and a monthly summary, flags anything unverified.", "candidates": ["Sami El-Naggar", "Mona El-Sherif", "Karim Fouad"], "picked": null}
+}
