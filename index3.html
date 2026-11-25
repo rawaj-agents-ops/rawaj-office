@@ -130,8 +130,8 @@ function setBubble(o,lines){const c=document.createElement("canvas");c.width=512
 function wrap(txt,n){const w=(txt||"").split(" "),out=[];let l="";for(const x of w){if((l+" "+x).length>n){out.push(l);l=x}else l=(l?l+" ":"")+x}if(l)out.push(l);return out}
 function greet(o){const s=o.st||{};o.greet=7;
  const stt=s.state==="done"?"Finished today's task":s.state==="working"?"Working on it now":s.state==="failed"?"Waiting for the next run":"No run yet";
- const lines=[`Hi, I'm ${o.a.name}!`,o.a.title,stt+(o.inMeeting?" (in meeting)":"")];
- const tk=wrap(s.task||"",32).slice(0,1);lines.push(...tk);setBubble(o,lines.slice(0,4));o.bub.visible=true}
+ const lines=[`Hi, I'm ${o.a.name}!`,stt+(o.inMeeting?" (in meeting)":"")];
+ const tk=wrap(s.task||"",34).slice(0,2);lines.push(...tk);setBubble(o,lines.slice(0,4));o.bub.visible=true}
 // pick
 const ray=new THREE.Raycaster(),mouse=new THREE.Vector2(),panel=document.getElementById("panel");
 const roots=ids.map(i=>objs[i].f.root);
