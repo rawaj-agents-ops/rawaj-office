@@ -26,7 +26,7 @@ cfg = json.load(open("agents.json"))
 
 def call(system, user, aid="research"):
     for m in PRIORITY.get(aid, PRIORITY["research"]) + [LIGHT, "openrouter/free"]:
-        for attempt in range(2):
+        for attempt in range(1):
             try:
                 body = json.dumps({"model": m, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "max_tokens": 1500}).encode()
                 req = urllib.request.Request("https://openrouter.ai/api/v1/chat/completions", body, {"Authorization": "Bearer " + KEY, "Content-Type": "application/json"})
@@ -36,7 +36,7 @@ def call(system, user, aid="research"):
                     return t.strip(), m
             except Exception as e:
                 print("model", m, "failed:", e, file=sys.stderr)
-                time.sleep(20 if "429" in str(e) else 5)
+                time.sleep(10 if "429" in str(e) else 3)
                 if "401" in str(e) or "402" in str(e): break
     return None, None
 
@@ -63,7 +63,8 @@ if pulse:
     for a in cfg["agents"]:
         if a["id"] in pulse:
             sysmsg = f"You are the {a['name']} agent at {cfg['company']}\nYour job: {a['role']}\nWrite concisely and concretely. Output only your deliverable."
-            out, m = call(sysmsg, f"Date: {today}. Midday pass: produce a fresh, different deliverable than your morning one.", a["id"])
+            ctx = "\n".join(f"[{k}] {v.get('preview','')}" for k, v in st["agents"].items())
+            out, m = call(sysmsg, f"Date: {today}. Midday pass: produce a fresh, different deliverable than your morning one. Stay consistent with the team's latest work:\n{ctx}", a["id"])
             st["agents"][a["id"]] = {"name": a["name"], "state": "done" if out else "failed", "task": a["role"][:120], "model": m, "at": now.isoformat(), "preview": (out or "")[:140].replace("\n", " ")}
             os.makedirs("out", exist_ok=True)
             open(f"out/{today}-{a['id']}-pulse.md", "w").write(out or "failed")
@@ -77,31 +78,44 @@ if os.environ.get("EVENT") == "schedule":
         print("skip: already sent or before 8am Cairo"); sys.exit(0)
 
 status, outputs = {}, {}
+PERSON = {x["id"]: x.get("person", x["name"]) for x in cfg["agents"] + [cfg["qa"], cfg["manager"]]}
+roster = "\n".join(f"- {x['person']}, {x['title']} (id {x['id']}): {x['role']}" for x in cfg["agents"]) + f"\n- {PERSON['qa']}, QA Lead: {cfg['qa']['role']}\n- {PERSON['manager']}, Operations Manager: coordinates the team and writes the founder's report"
+plan, pm = call(f"You are {PERSON['manager']}, the Manager at {cfg['company']}\nTeam:\n{roster}", f"Date: {today}. Write today's short plan (max 120 words): one concrete focus per department, how their outputs depend on each other, and what to avoid duplicating or contradicting. Plain text.", "manager")
+plan = plan or "No plan today. Each agent works from its role and stays consistent with teammates' outputs."
+os.makedirs("out", exist_ok=True)
+open(f"out/{today}-plan.md", "w").write(plan)
+status["manager"] = {"person": PERSON["manager"], "title": cfg["manager"]["title"], "name": "Manager", "state": "working", "task": "daily plan", "model": pm, "at": now.isoformat(), "preview": plan[:140].replace("\n"," ")}
 for a in cfg["agents"]:
-    sysmsg = f"You are the {a['name']} agent at {cfg['company']}\nYour job: {a['role']}\nWrite concisely and concretely. Output only your deliverable."
-    out, m = call(sysmsg, f"Date: {today}. Produce today's deliverable.", a["id"])
+    sysmsg = (f"You are {a['person']}, the {a['title']} at {cfg['company']}\nYour job: {a['role']}\n"
+              f"The whole team:\n{roster}\n\nManager's plan for today:\n{plan}\n\n"
+              "Write concisely and concretely. Output only your deliverable. Stay consistent with your teammates' work shown below: reuse their facts, names and offers, do not duplicate or contradict them. If something conflicts or is missing, say so in one line starting with FLAG:")
+    done_so_far = "\n\n".join(f"[{k}] {v[:700]}" for k, v in outputs.items() if v) or "(nobody has finished yet, you are first)"
+    out, m = call(sysmsg, f"Date: {today}. Produce today's deliverable.\n\nTeammates' work so far today:\n{done_so_far}", a["id"])
     outputs[a["id"]] = out
-    status[a["id"]] = {"name": a["name"], "state": "done" if out else "failed", "task": a["role"][:120], "model": m, "at": now.isoformat(), "preview": (out or "")[:140].replace("\n"," ")}
+    status[a["id"]] = {"person": a["person"], "title": a["title"], "name": a["name"], "state": "done" if out else "failed", "task": a["role"][:120], "model": m, "at": now.isoformat(), "preview": (out or "")[:140].replace("\n"," ")}
     print(a["id"], status[a["id"]]["state"])
 bundle = "\n\n".join(f"### {k}\n{v}" for k, v in outputs.items() if v)
-qa, qm = call(f"You are the QA agent at {cfg['company']}\n{cfg['qa']['role']}", "Review these outputs. For each department give PASS or FIX plus one line.\n\n" + bundle, "qa")
+qa, qm = call(f"You are the QA agent at {cfg['company']}\n{cfg['qa']['role']}", "Review the whole team's work against the manager plan and against each other (consistency, duplicates, contradictions, missing pieces). For each department give its id, then PASS or FIX plus one line.\n\nTeam:\n" + roster + "\n\nManager plan:\n" + plan + "\n\nOutputs:\n\n" + bundle, "qa")
 import re
 flagged = [x["id"] for x in cfg["agents"] if qa and re.search(re.escape(x["id"]) + r"\W{0,12}FIX", qa, re.I)] if isinstance(cfg.get("agents"), list) else []
-status["qa"] = {"flagged": flagged, "name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
+status["qa"] = {"flagged": flagged, "person": PERSON["qa"], "title": cfg["qa"]["title"], "name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
 rep, rm = call(
-    f"You are the Manager agent at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic (عامية مصرية), friendly and short. Structure: 1) one line summary, 2) a line or two per department about what it produced today and the best item, 3) QA verdict, 4) the top 3 actions for the founder today (concrete, start with sending the outreach messages), 5) anything that needs his decision. Plain text, no markdown symbols. Be honest: say when something failed or is unverified.",
+    f"You are the Manager agent at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic. Refer to each employee by first name (Omar, Layla, Yousef, Nour, Karim, Hala, Tariq, Mariam) with their role, keeping the names in English letters (عامية مصرية), friendly and short. Structure: 1) one line summary, 2) a line or two per department about what it produced today and the best item, 3) QA verdict, 4) the top 3 actions for the founder today (concrete, start with sending the outreach messages), 5) anything that needs his decision. Plain text, no markdown symbols. Be honest: say when something failed or is unverified.",
     "Department outputs:\n\n" + bundle + "\n\nQA review:\n" + (qa or "QA failed"), "manager")
-status["manager"] = {"name": "Manager", "state": "done" if rep else "failed", "task": "daily report", "model": rm, "at": now.isoformat(), "preview": (rep or "")[:140].replace("\n"," ")}
+status["manager"] = {"person": PERSON["manager"], "title": cfg["manager"]["title"], "name": "Manager", "state": "done" if rep else "failed", "task": "daily report", "model": rm, "at": now.isoformat(), "preview": (rep or "")[:140].replace("\n"," ")}
 os.makedirs("out", exist_ok=True)
 open(f"out/{today}.md", "w").write(f"# Rawaj daily {today}\n\n## Report\n{rep}\n\n## QA\n{qa}\n\n## Outputs\n{bundle}\n")
 json.dump({"updated": now.isoformat(), "agents": status}, open("state/status.json", "w"), ensure_ascii=False, indent=1)
-if os.path.exists(sent):
+force = os.path.exists("state/force_send.txt")
+if os.path.exists(sent) and not force:
     print("report already sent today: status updated, no second Telegram message"); sys.exit(0)
 cid = chat_id()
 if not cid:
     print("no chat id yet: user must press Start on the bot"); sys.exit(0)
-used = "\n".join(f"- {v['name']}: {(v['model'] or 'فشل').replace(':free','')}" for v in status.values())
+used = "\n".join(f"- {v.get('person', v['name'])}, {v.get('title', v['name'])}: {(v['model'] or 'فشل').replace(':free','')}" for v in status.values())
 text = f"تقرير رواج اليومي - {today}\n\n" + (rep or "النظام اشتغل بس مفيش تقرير طلع النهارده. هراجع المشكلة.") + "\n\nالموديلات المجانية اللي اشتغلوا النهارده:\n" + used
 for i in range(0, len(text), 3800):
     print("telegram sent:", tg("sendMessage", chat_id=cid, text=text[i:i+3800]).get("ok"))
 open(sent, "w").write("ok")
+if force:
+    os.remove("state/force_send.txt")
