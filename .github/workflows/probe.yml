@@ -1,0 +1,26 @@
+name: probe-telegram
+on: workflow_dispatch
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check token shape and call Telegram
+        env:
+          T: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import os, re, json, urllib.request, urllib.error
+          t = os.environ["T"]
+          print("LEN", len(t), "HAS_COLON", ":" in t, "STARTS_BOT", t.lower().startswith("bot"), "HAS_SPACE_OR_NL", bool(re.search(r"\s", t)), "SHAPE_OK", bool(re.fullmatch(r"\d{6,12}:[A-Za-z0-9_-]{30,40}", t)))
+          t2 = t.strip()
+          try:
+              me = json.load(urllib.request.urlopen(f"https://api.telegram.org/bot{t2}/getMe"))["result"]
+              print("BOT_USERNAME=" + me["username"])
+              ups = json.load(urllib.request.urlopen(f"https://api.telegram.org/bot{t2}/getUpdates"))["result"]
+              print("UPDATES", len(ups))
+              for u in ups:
+                  c = (u.get("message") or {}).get("chat", {})
+                  print("CHAT", c.get("id"), c.get("type"), c.get("first_name"))
+          except urllib.error.HTTPError as e:
+              print("HTTP", e.code)
+          PY
