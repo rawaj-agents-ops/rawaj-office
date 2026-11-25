@@ -129,6 +129,9 @@ if not cid:
     print("no chat id yet: user must press Start on the bot"); sys.exit(0)
 used = "\n".join(f"- {v.get('person', v['name'])}, {v.get('title', v['name'])}: {(v['model'] or 'فشل').replace(':free','')}" for v in status.values())
 text = f"تقرير رواج اليومي - {today}\n\n" + (rep or "النظام اشتغل بس مفيش تقرير طلع النهارده. هراجع المشكلة.") + "\n\nالموديلات المجانية اللي اشتغلوا النهارده:\n" + used
+if os.path.exists("state/recruitment.md") and not os.path.exists("state/recruitment_sent"):
+    text += "\n\n" + open("state/recruitment.md", encoding="utf-8").read()[:2600]
+    open("state/recruitment_sent", "w").write("ok")
 for i in range(0, len(text), 3800):
     print("telegram sent:", tg("sendMessage", chat_id=cid, text=text[i:i+3800]).get("ok"))
 open(sent, "w").write("ok")
