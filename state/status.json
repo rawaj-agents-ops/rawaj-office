@@ -1,28 +1,28 @@
 {
- "updated": "2026-11-25T23:22:43.382400+02:00",
+ "updated": "2026-11-25T23:34:06.968149+02:00",
  "agents": {
   "research": {
    "name": "Research",
-   "state": "failed",
+   "state": "done",
    "task": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3.5-super-vl:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "**Rawaj Global — Market Research Deliver"
   },
   "content": {
    "name": "Content AR/EN",
-   "state": "failed",
+   "state": "done",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "**RAWJ GLOBAL — SOCIAL CONTENT PACK**   *Date: 2026‑11‑25*    ---  ### 1️⃣ ARABIC (Gulf) – Rawaj Global | Agency Pitch   **Hook:**   🚀 عيادت"
   },
   "design": {
    "name": "Design Brief",
    "state": "failed",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
    "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
+   "at": "2026-11-25T23:34:06.968149+02:00",
    "preview": ""
   },
   "scheduling": {
@@ -30,40 +30,40 @@
    "state": "failed",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
    "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
+   "at": "2026-11-25T23:34:06.968149+02:00",
    "preview": ""
   },
   "client_success": {
    "name": "Client Success",
-   "state": "failed",
+   "state": "done",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3.5-super-vl:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "**Subject:** أهلاً بك في روج جلوبال / Welcome to Rawaj Global — [Clinic Name]  ---  **Arabic**  مرحباً، دكتور/دكتورة [Clinic Owner Name]،  أ"
   },
   "lead_research": {
    "name": "Lead Research",
-   "state": "failed",
+   "state": "done",
    "task": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arab",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "# Rawaj Global — Outreach Pack (2026-11-25)  ---  ## Ideal Clinic Client Profile (ICP)  | Dimension | Criteria | |-----------|----------| | "
   },
   "qa": {
    "name": "QA",
-   "state": "failed",
+   "state": "done",
    "task": "review",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "**research** — FIX: Output is only a title with no actual research deliverable (ICP, competitor scan, keyword list, or Gulf clinic data).  *"
   },
   "manager": {
    "name": "Manager",
-   "state": "failed",
+   "state": "done",
    "task": "daily report",
-   "model": null,
-   "at": "2026-11-25T23:22:43.382400+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-25T23:34:06.968149+02:00",
+   "preview": "ملخص اليوم: المخرجات الأربع فيها مشاكل جوهرية محتاجة تعديل قبل ما نستخدمها مع عيادات حقيقية.  بحث: مفيش مخرجات حقيقية — بس عنوان \"Rawaj Glob"
   }
  }
 }
