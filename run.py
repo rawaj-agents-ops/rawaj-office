@@ -24,7 +24,10 @@ now = datetime.datetime.now(ZoneInfo("Africa/Cairo"))
 today = now.strftime("%Y-%m-%d")
 cfg = json.load(open("agents.json"))
 
+DEAD = {"n": 0}
 def call(system, user, aid="research"):
+    if DEAD["n"] >= 2:
+        print("quota looks exhausted: skipping", aid, file=sys.stderr); return None, None
     for m in PRIORITY.get(aid, PRIORITY["research"]) + [LIGHT, "openrouter/free"]:
         for attempt in range(1):
             try:
@@ -33,11 +36,13 @@ def call(system, user, aid="research"):
                 with urllib.request.urlopen(req, timeout=120) as r:
                     t = json.load(r)["choices"][0]["message"]["content"]
                 if t and t.strip():
+                    DEAD["n"] = 0
                     return t.strip(), m
             except Exception as e:
                 print("model", m, "failed:", e, file=sys.stderr)
                 time.sleep(10 if "429" in str(e) else 3)
                 if "401" in str(e) or "402" in str(e): break
+    DEAD["n"] += 1
     return None, None
 
 def tg(method, **p):
@@ -80,6 +85,10 @@ if os.environ.get("EVENT") == "schedule":
 status, outputs = {}, {}
 PERSON = {x["id"]: x.get("person", x["name"]) for x in cfg["agents"] + [cfg["qa"], cfg["manager"]]}
 roster = "\n".join(f"- {x['person']}, {x['title']} (id {x['id']}): {x['role']}" for x in cfg["agents"]) + f"\n- {PERSON['qa']}, QA Lead: {cfg['qa']['role']}\n- {PERSON['manager']}, Operations Manager: coordinates the team and writes the founder's report"
+MEM_ON = os.path.exists("state/memory_on.txt")
+mem = open("state/memory.md").read()[-3000:] if MEM_ON and os.path.exists("state/memory.md") else ""
+if mem:
+    roster += "\n\nPrevious days (learn from it, do not repeat mistakes or offers):\n" + mem
 plan, pm = call(f"You are {PERSON['manager']}, the Manager at {cfg['company']}\nTeam:\n{roster}", f"Date: {today}. Write today's short plan (max 120 words): one concrete focus per department, how their outputs depend on each other, and what to avoid duplicating or contradicting. Plain text.", "manager")
 plan = plan or "No plan today. Each agent works from its role and stays consistent with teammates' outputs."
 os.makedirs("out", exist_ok=True)
@@ -100,13 +109,19 @@ import re
 flagged = [x["id"] for x in cfg["agents"] if qa and re.search(re.escape(x["id"]) + r"\W{0,12}FIX", qa, re.I)] if isinstance(cfg.get("agents"), list) else []
 status["qa"] = {"flagged": flagged, "person": PERSON["qa"], "title": cfg["qa"]["title"], "name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
 rep, rm = call(
-    f"You are the Manager agent at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic. Refer to each employee by first name (Omar, Layla, Yousef, Nour, Karim, Hala, Tariq, Mariam) with their role, keeping the names in English letters (عامية مصرية), friendly and short. Structure: 1) one line summary, 2) a line or two per department about what it produced today and the best item, 3) QA verdict, 4) the top 3 actions for the founder today (concrete, start with sending the outreach messages), 5) anything that needs his decision. Plain text, no markdown symbols. Be honest: say when something failed or is unverified.",
+    f"You are the Manager agent at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic. Refer to each employee by first name (Omar, Layla, Yousef, Nour, Karim, Hala, Tariq, Mariam) with their role, keeping the names in English letters (عامية مصرية), friendly and short. Structure: 1) one line summary, 2) a line or two per department about what it produced today and the best item, 3) QA verdict, 4) the top 3 actions for the founder today (concrete, start with sending the outreach messages), 5) a section titled محتاجين قرارك listing every line starting with FLAG: in the department outputs or QA as a short question to him (write none if there are no flags), and anything else that needs his decision. Plain text, no markdown symbols. Be honest: say when something failed or is unverified.",
     "Department outputs:\n\n" + bundle + "\n\nQA review:\n" + (qa or "QA failed"), "manager")
 status["manager"] = {"person": PERSON["manager"], "title": cfg["manager"]["title"], "name": "Manager", "state": "done" if rep else "failed", "task": "daily report", "model": rm, "at": now.isoformat(), "preview": (rep or "")[:140].replace("\n"," ")}
+if MEM_ON:
+    line = f"\n## {today}\nQA flagged: {', '.join(flagged) or 'none'}. Summary: {(rep or '')[:350]}\n"
+    open("state/memory.md", "a").write(line)
+    t = open("state/memory.md").read(); open("state/memory.md", "w").write(t[-3500:])
 os.makedirs("out", exist_ok=True)
 open(f"out/{today}.md", "w").write(f"# Rawaj daily {today}\n\n## Report\n{rep}\n\n## QA\n{qa}\n\n## Outputs\n{bundle}\n")
 json.dump({"updated": now.isoformat(), "agents": status}, open("state/status.json", "w"), ensure_ascii=False, indent=1)
 force = os.path.exists("state/force_send.txt")
+if not rep:
+    print("no manager report today (free quota exhausted?): not sending a fallback message"); sys.exit(0)
 if os.path.exists(sent) and not force:
     print("report already sent today: status updated, no second Telegram message"); sys.exit(0)
 cid = chat_id()
