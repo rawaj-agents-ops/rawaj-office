@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>مكتب رواج</title>
+<style>
+:root{--floor:#d9c7a3;--wall:#3b4a6b;--ink:#222;--ok:#2ecc71;--bad:#e74c3c;--idle:#95a5a6}
+*{box-sizing:border-box}body{margin:0;background:#1d2433;font-family:system-ui,"Segoe UI",Tahoma,sans-serif;color:#fff}
+header{padding:14px 16px;background:var(--wall);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px}
+h1{font-size:18px;margin:0}#upd{font-size:12px;opacity:.8}
+#office{max-width:980px;margin:14px auto;padding:14px;background:var(--floor);border:6px solid #8a6d3b;border-radius:6px;
+ background-image:linear-gradient(#0000000d 1px,transparent 1px),linear-gradient(90deg,#0000000d 1px,transparent 1px);background-size:32px 32px;
+ display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:18px}
+.boss{grid-column:1/-1;display:flex;justify-content:center}
+.desk{position:relative;background:#a77b4b;border:3px solid #6b4a24;border-radius:4px;padding:10px 8px 8px;color:var(--ink);cursor:pointer;min-height:176px;image-rendering:pixelated}
+.desk:hover{transform:translateY(-2px)}
+.boss .desk{width:260px}
+.name{font-weight:700;font-size:13px;text-align:center;background:#fff9;border-radius:3px;padding:2px}
+.mon{margin:8px auto 0;width:96px;height:56px;background:#14202e;border:4px solid #333;border-radius:3px;position:relative;overflow:hidden}
+.mon i{position:absolute;left:6px;height:5px;background:#5dd;opacity:.9;border-radius:1px}
+.ok .mon i{animation:t 1.6s steps(6) infinite}
+.bad .mon{background:#3a1010}.idle .mon{background:#1b1b1b}
+@keyframes t{from{width:4px}to{width:70px}}
+.mon i:nth-child(1){top:8px}.mon i:nth-child(2){top:20px;animation-delay:.4s}.mon i:nth-child(3){top:32px;animation-delay:.9s}
+.char{margin:6px auto 0;width:36px;height:44px;position:relative;image-rendering:pixelated}
+.head{position:absolute;left:8px;top:0;width:20px;height:18px;background:#f1c27d;border:2px solid #000;border-radius:3px}
+.hair{position:absolute;left:8px;top:-2px;width:20px;height:8px;background:var(--hair,#2c1b0e);border:2px solid #000;border-radius:3px 3px 0 0}
+.body{position:absolute;left:4px;top:20px;width:28px;height:24px;background:var(--shirt,#3498db);border:2px solid #000;border-radius:3px}
+.ok .char{animation:b 0.8s steps(2) infinite}.bad .char{animation:sh .3s steps(2) infinite}
+@keyframes b{50%{transform:translateY(-2px)}}@keyframes sh{50%{transform:translateX(2px)}}
+.dot{position:absolute;top:8px;left:8px;width:12px;height:12px;border-radius:50%;background:var(--idle);border:2px solid #0006}
+.ok .dot{background:var(--ok)}.bad .dot{background:var(--bad)}
+.bubble{margin-top:6px;font-size:11px;line-height:1.35;background:#fff;border:2px solid #000;border-radius:6px;padding:4px 6px;max-height:48px;overflow:hidden}
+#panel{display:none;position:fixed;inset:auto 0 0 0;background:#fff;color:#222;padding:16px;border-top:4px solid var(--wall);max-height:55vh;overflow:auto}
+#panel h2{margin:0 0 6px;font-size:16px}#panel p{margin:6px 0;font-size:14px;white-space:pre-wrap}#panel button{float:left}
+footer{text-align:center;font-size:11px;opacity:.6;padding:10px}
+</style></head><body>
+<header><h1>🏢 مكتب رواج جلوبال</h1><span id="upd">بيحمّل...</span></header>
+<div id="office"></div>
+<div id="panel"><button onclick="panel.style.display='none'">إغلاق</button><h2 id="pt"></h2><p id="pb"></p></div>
+<footer>الحالة بتتحدّث كل ما الوكلاء يخلّصوا شغلهم (مش بث لحظي)</footer>
+<script>
+const TEAM=[
+ {id:"manager",ar:"المدير",role:"بيجمّع التقرير اليومي",shirt:"#8e44ad",hair:"#111",boss:1},
+ {id:"research",ar:"الأبحاث",role:"بحث سوق عيادات الخليج",shirt:"#2980b9",hair:"#2c1b0e"},
+ {id:"content",ar:"المحتوى عربي/إنجليزي",role:"بوستات جاهزة للنشر",shirt:"#e67e22",hair:"#5a3a1a"},
+ {id:"design",ar:"تصميم (Brief)",role:"بريفات تصميم",shirt:"#e84393",hair:"#111"},
+ {id:"scheduling",ar:"الجدولة",role:"خطة النشر لـ7 أيام",shirt:"#16a085",hair:"#8a5a2b"},
+ {id:"client_success",ar:"نجاح العملاء",role:"أونبوردينج ومتابعة",shirt:"#27ae60",hair:"#222"},
+ {id:"lead_research",ar:"بحث العملاء المحتملين",role:"رسائل تواصل للعيادات",shirt:"#c0392b",hair:"#3b2a1a"},
+ {id:"qa",ar:"مراجعة الجودة QA",role:"بيراجع كل المخرجات",shirt:"#7f8c8d",hair:"#999"}];
+const $=s=>document.querySelector(s),off=$("#office"),panel=$("#panel");
+function card(t,a){const st=a?(a.state==="done"?"ok":"bad"):"idle";
+ const bub=a?(a.state==="done"?"✓ "+(a.preview||"خلّص"):"⚠ حصلت مشكلة في آخر تشغيل"):"💤 لسه ما اشتغلش النهارده";
+ const d=document.createElement("div");d.className="desk "+st;d.style.setProperty("--shirt",t.shirt);d.style.setProperty("--hair",t.hair);
+ d.innerHTML=`<span class="dot"></span><div class="name">${t.ar}</div><div class="mon"><i></i><i></i><i></i></div><div class="char"><div class="hair"></div><div class="head"></div><div class="body"></div></div><div class="bubble"></div>`;
+ d.querySelector(".bubble").textContent=bub;
+ d.onclick=()=>{$("#pt").textContent=t.ar;$("#pb").textContent="المهمة: "+t.role+"\n"+(a?("الحالة: "+(a.state==="done"?"خلّص":"فشل")+"\nالموديل: "+((a.model||"-").replace(":free",""))+"\nآخر تشغيل: "+new Date(a.at).toLocaleString("ar-EG")+"\n\n"+(a.preview||"")):"لسه مفيش تشغيل.");panel.style.display="block"};
+ return d}
+fetch("state/status.json?"+Date.now()).then(r=>r.json()).catch(()=>({agents:{}})).then(s=>{
+ const ag=s.agents||{};
+ $("#upd").textContent=s.updated?("آخر تحديث: "+new Date(s.updated).toLocaleString("ar-EG")):"لسه ما اشتغلش";
+ TEAM.forEach(t=>{const c=card(t,ag[t.id]);if(t.boss){const w=document.createElement("div");w.className="boss";w.appendChild(c);off.appendChild(w)}else off.appendChild(c)})});
+</script></body></html>
