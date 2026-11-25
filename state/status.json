@@ -1,69 +1,86 @@
 {
- "updated": "2026-11-25T23:34:06.968149+02:00",
+ "updated": "2026-11-25T23:54:18.107633+02:00",
  "agents": {
+  "manager": {
+   "person": "Omar",
+   "title": "Operations Manager",
+   "name": "Manager",
+   "state": "failed",
+   "task": "daily report",
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
+  },
   "research": {
+   "person": "Layla",
+   "title": "Market Research Analyst",
    "name": "Research",
-   "state": "done",
+   "state": "failed",
    "task": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what",
-   "model": "nvidia/nemotron-3.5-super-vl:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "**Rawaj Global — Market Research Deliver"
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
   },
   "content": {
+   "person": "Yousef",
+   "title": "Content Lead (AR/EN)",
    "name": "Content AR/EN",
-   "state": "done",
+   "state": "failed",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
-   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "**RAWJ GLOBAL — SOCIAL CONTENT PACK**   *Date: 2026‑11‑25*    ---  ### 1️⃣ ARABIC (Gulf) – Rawaj Global | Agency Pitch   **Hook:**   🚀 عيادت"
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
   },
   "design": {
+   "person": "Nour",
+   "title": "Design Brief Specialist",
    "name": "Design Brief",
    "state": "failed",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
    "model": null,
-   "at": "2026-11-25T23:34:06.968149+02:00",
+   "at": "2026-11-25T23:54:18.107633+02:00",
    "preview": ""
   },
   "scheduling": {
+   "person": "Karim",
+   "title": "Scheduling Coordinator",
    "name": "Scheduling",
    "state": "failed",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
    "model": null,
-   "at": "2026-11-25T23:34:06.968149+02:00",
+   "at": "2026-11-25T23:54:18.107633+02:00",
    "preview": ""
   },
   "client_success": {
+   "person": "Hala",
+   "title": "Client Success Manager",
    "name": "Client Success",
-   "state": "done",
+   "state": "failed",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
-   "model": "nvidia/nemotron-3.5-super-vl:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "**Subject:** أهلاً بك في روج جلوبال / Welcome to Rawaj Global — [Clinic Name]  ---  **Arabic**  مرحباً، دكتور/دكتورة [Clinic Owner Name]،  أ"
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
   },
   "lead_research": {
+   "person": "Tariq",
+   "title": "Lead Research Specialist",
    "name": "Lead Research",
-   "state": "done",
+   "state": "failed",
    "task": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arab",
-   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "# Rawaj Global — Outreach Pack (2026-11-25)  ---  ## Ideal Clinic Client Profile (ICP)  | Dimension | Criteria | |-----------|----------| | "
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
   },
   "qa": {
+   "flagged": [],
+   "person": "Mariam",
+   "title": "QA Lead",
    "name": "QA",
-   "state": "done",
+   "state": "failed",
    "task": "review",
-   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "**research** — FIX: Output is only a title with no actual research deliverable (ICP, competitor scan, keyword list, or Gulf clinic data).  *"
-  },
-  "manager": {
-   "name": "Manager",
-   "state": "done",
-   "task": "daily report",
-   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-25T23:34:06.968149+02:00",
-   "preview": "ملخص اليوم: المخرجات الأربع فيها مشاكل جوهرية محتاجة تعديل قبل ما نستخدمها مع عيادات حقيقية.  بحث: مفيش مخرجات حقيقية — بس عنوان \"Rawaj Glob"
+   "model": null,
+   "at": "2026-11-25T23:54:18.107633+02:00",
+   "preview": ""
   }
  }
 }
