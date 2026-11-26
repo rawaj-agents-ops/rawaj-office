@@ -15,6 +15,7 @@ if S["day"] != today: S["day"] = today; S["n"] = 0
 cfg = json.load(open("agents.json"))
 PEOPLE = {"manager": cfg["manager"], "qa": cfg["qa"]}
 for a in cfg["agents"]: PEOPLE[a["id"]] = a
+for k, a in cfg.get("on_demand", {}).items(): PEOPLE[k] = a
 CID = open("state/chat_id.txt").read().strip()
 status = json.load(open("state/status.json")).get("agents", {}) if os.path.exists("state/status.json") else {}
 mem = open("state/memory.md", encoding="utf-8").read()[-1500:] if os.path.exists("state/memory.md") else ""
