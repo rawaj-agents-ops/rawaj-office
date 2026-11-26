@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T12:29:53.316082+02:00",
+ "updated": "2026-11-26T15:49:44.160448+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -20,24 +20,20 @@
    "preview": "**Rawaj Global — Midday Research Deliverable — 2026-11-26**  **Verification status:** All claims about Gulf clinic types, budgets, and buyer"
   },
   "content": {
-   "person": "Yousef",
-   "title": "Content Lead (AR/EN)",
    "name": "Content AR/EN",
    "state": "done",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-26T08:45:28.967835+02:00",
-   "preview": "**Rawaj Global — Content Pack 2026-11-26**   *All posts for Rawaj’s own page (IG + LinkedIn). Gulf-friendly Arabic, no medical claims, soft "
+   "at": "2026-11-26T15:49:44.160448+02:00",
+   "preview": "**Rawaj Global — Midday Content Pack — 2026-11-26**   *Fresh angle: “Lead Quality Audit” — concrete, zero fluff, Gulf tone.*  ---  ### 1️⃣ R"
   },
   "design": {
-   "person": "Nour",
-   "title": "Design Brief Specialist",
    "name": "Design Brief",
-   "state": "failed",
+   "state": "done",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
-   "model": null,
-   "at": "2026-11-26T08:45:28.967835+02:00",
-   "preview": ""
+   "model": "openrouter/free",
+   "at": "2026-11-26T15:49:44.160448+02:00",
+   "preview": "# Rawaj Global — Design Briefs (Midday) — 2026-11-26 **Angle:** Lead Quality Audit / تدقيق جودة الليدز · **Tool:** Canva Free only · **Audie"
   },
   "scheduling": {
    "person": "Karim",
