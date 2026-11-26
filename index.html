@@ -29,8 +29,9 @@ const AG0=[
  {id:"scheduling",c:0x138d75,skin:0xb98558,hair:0x22160f,style:"short",pants:0x424949},
  {id:"client_success",c:0x229954,skin:0xe3b48c,hair:0xf2eee6,style:"hijab",pants:0x2c3e50},
  {id:"lead_research",c:0xc0392b,skin:0xd9a577,hair:0x30201a,style:"short",pants:0x1f2d3d},
- {id:"qa",c:0x7f8c8d,skin:0xeac39e,hair:0x6d4c41,style:"hijab",pants:0x2c3e50}];
-const TITLES={manager:["Omar","Operations Manager"],research:["Layla","Market Research Analyst"],content:["Yousef","Content Lead (AR/EN)"],design:["Nour","Design Brief Specialist"],scheduling:["Karim","Scheduling Coordinator"],client_success:["Hala","Client Success Manager"],lead_research:["Tariq","Lead Research Specialist"],qa:["Mariam","QA Lead"]};
+ {id:"qa",c:0x7f8c8d,skin:0xeac39e,hair:0x6d4c41,style:"hijab",pants:0x2c3e50},
+ {id:"accountant",c:0x1a5276,skin:0xc99467,hair:0x1c1410,style:"short",pants:0x2c3e50,od:true}];
+const TITLES={manager:["Omar","Operations Manager"],research:["Layla","Market Research Analyst"],content:["Yousef","Content Lead (AR/EN)"],design:["Nour","Design Brief Specialist"],scheduling:["Karim","Scheduling Coordinator"],client_success:["Hala","Client Success Manager"],lead_research:["Tariq","Lead Research Specialist"],qa:["Mariam","QA Lead"],accountant:["Karim Fouad","Accountant (on call)"]};
 const AG=AG0.map(a=>({...a,name:TITLES[a.id][0],title:TITLES[a.id][1],n:TITLES[a.id][0]+" · "+TITLES[a.id][1]}));
 const COL={done:0x2ecc71,failed:0xe74c3c,working:0xf1c40f,idle:0x7f8c8d};
 let renderer;
@@ -85,7 +86,7 @@ box(0.6,1.1,0.6,0xdfe6ee,-9.4,0.55,0.0);cyl(0.22,0.22,0.5,0x66b3ff,-9.4,1.35,0.0
 {const c=document.createElement("canvas");c.width=c.height=128;const g=c.getContext("2d");g.fillStyle="#fff";g.beginPath();g.arc(64,64,60,0,7);g.fill();g.strokeStyle="#222";g.lineWidth=4;g.stroke();g.beginPath();g.moveTo(64,64);g.lineTo(64,22);g.moveTo(64,64);g.lineTo(92,74);g.stroke();const cm=new THREE.Mesh(new THREE.CircleGeometry(0.5,24),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c)}));cm.position.set(2,2.9,-6.74);scene.add(cm)}
 // desks
 const desks=[];const home=[];
-AG.forEach((a,i)=>{const col=i%4,row=Math.floor(i/4);const d=row===0?-1:1;const bx=-8.4+col*3.6,bz=row===0?-3:3;
+AG.forEach((a,i)=>{const col=i%4,row=Math.floor(i/4);const d=a.od?1:(row===0?-1:1);const bx=a.od?0.6:-8.4+col*3.6,bz=a.od?-5.6:(row===0?-3:3);
  a.d=d;home.push(new THREE.Vector3(bx,0,bz-d*0.6));
  const dz=bz+d*0.4;
  box(2.4,0.08,1.2,0xb58b5a,bx,0.92,dz);box(0.08,0.9,1.1,0x4a3320,bx-1.1,0.45,dz);box(0.08,0.9,1.1,0x4a3320,bx+1.1,0.45,dz);box(0.9,0.6,0.5,0x9c7448,bx+0.75,0.4,dz+d*0.1);
@@ -129,7 +130,7 @@ function setBubble(o,lines){const c=document.createElement("canvas");c.width=512
  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;o.bub.material.map=t;o.bub.material.needsUpdate=true}
 function wrap(txt,n){const w=(txt||"").split(" "),out=[];let l="";for(const x of w){if((l+" "+x).length>n){out.push(l);l=x}else l=(l?l+" ":"")+x}if(l)out.push(l);return out}
 function greet(o){const s=o.st||{};o.greet=7;
- const stt=s.state==="done"?"Finished today's task":s.state==="working"?"Working on it now":s.state==="failed"?"Waiting for the next run":"No run yet";
+ const stt=o.a.od?"On call: starts when money moves":s.state==="done"?"Finished today's task":s.state==="working"?"Working on it now":s.state==="failed"?"Waiting for the next run":"No run yet";
  const lines=[`Hi, I'm ${o.a.name}!`,stt+(o.inMeeting?" (in meeting)":"")];
  const tk=wrap(s.task||"",34).slice(0,2);lines.push(...tk);setBubble(o,lines.slice(0,4));o.bub.visible=true}
 // pick
@@ -154,7 +155,7 @@ function pathTo(o,tx,tz){const p=[];const c=o.pos;if(c.x>5.0&&tx<5.0){p.push(V(5
 function sendHome(o){const h=o.home;const p=pathTo(o,h.x,h.z);goTo(o,p,"sit")}
 function sendMeeting(o,k){const t=MEET_SEATS[k%MEET_SEATS.length];goTo(o,pathTo(o,t[0],t[1]),"stand",V(8.2,0));o.inMeeting=true}
 let pairBusy=null;
-function maybePair(t){if(pairBusy)return;const free=ids.filter(i=>objs[i].mode==="seated"&&!objs[i].inMeeting&&objs[i].greet<=0);if(free.length<2)return;
+function maybePair(t){if(pairBusy)return;const free=ids.filter(i=>!objs[i].a.od&&objs[i].mode==="seated"&&!objs[i].inMeeting&&objs[i].greet<=0);if(free.length<2)return;
  const a=free[Math.floor(Math.random()*free.length)];let b=a;while(b===a)b=free[Math.floor(Math.random()*free.length)];
  const A=objs[a],B=objs[b];pairBusy={a:A,b:B,t:0,stage:"go"};
  goTo(A,pathTo(A,-8.2,AISLE),"stand",V(-7.1,0));goTo(B,pathTo(B,-7.1,AISLE),"stand",V(-8.2,0))}
