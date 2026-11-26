@@ -26,7 +26,7 @@ cfg = json.load(open("agents.json"))
 
 DEAD = {"n": 0}
 def call(system, user, aid="research"):
-    if DEAD["n"] >= 2:
+    if DEAD["n"] >= 2 and aid not in ("manager", "qa"):
         print("quota looks exhausted: skipping", aid, file=sys.stderr); return None, None
     for m in PRIORITY.get(aid, PRIORITY["research"]) + [LIGHT, "openrouter/free"]:
         for attempt in range(1):
