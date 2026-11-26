@@ -1,6 +1,6 @@
 {
  "status": "resolved",
- "note": "Karim Fouad was picked by the founder and promoted to agents.json under on_demand. Not read by run.py, never in the cron.",
+ "note": "Candidate 3 was picked by the founder and promoted to agents.json as Hussein Fouad under on_demand. Not read by run.py, never in the cron.",
  "accountant": {
   "activates_when": "money moves: first client payment, invoice, expense, pricing change",
   "role": "Tracks revenue and expenses in USD and EGP, prepares invoices and a monthly summary, flags anything unverified.",
@@ -9,6 +9,6 @@
    "Mona El-Sherif",
    "Karim Fouad"
   ],
-  "picked": "Karim Fouad"
+  "picked": "Karim Fouad, renamed by the founder to Hussein Fouad"
  }
 }
