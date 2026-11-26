@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T17:51:13.969138+02:00",
+ "updated": "2026-11-26T19:03:50.641262+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -42,24 +42,20 @@
    "preview": ""
   },
   "scheduling": {
-   "person": "Karim",
-   "title": "Scheduling Coordinator",
    "name": "Scheduling",
-   "state": "failed",
+   "state": "done",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
-   "model": null,
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": ""
+   "model": "google/gemma-4-31b-it:free",
+   "at": "2026-11-26T19:03:50.641262+02:00",
+   "preview": "**Rawaj Global — 7-Day Posting Plan (Nov 26 – Dec 02)** *Target Audience: Clinic Owners/Medical Directors (GCC)* *Timezone: GST (Gulf Standa"
   },
   "client_success": {
-   "person": "Hala",
-   "title": "Client Success Manager",
    "name": "Client Success",
-   "state": "failed",
+   "state": "done",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
-   "model": null,
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3.5-super-vl:free",
+   "at": "2026-11-26T19:03:50.641262+02:00",
+   "preview": "**Rawaj Global — Monthly Clinic Report Outline**  **Clinic:** ____________________   **Reporting Period:** ____________________   **Prepared"
   },
   "lead_research": {
    "person": "Tariq",
