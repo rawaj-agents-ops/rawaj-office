@@ -57,5 +57,16 @@
    "person": "Tariq",
    "title": "Lead Research Specialist"
   }
- ]
+ ],
+ "on_demand": {
+  "accountant": {
+   "id": "accountant",
+   "name": "Accountant",
+   "person": "Karim Fouad",
+   "title": "Accountant (on call)",
+   "role": "International payments accountant: tracks revenue and expenses in USD and EGP, prepares invoices and payment-platform fees, flags anything unverified. Activates only when money moves (client payment, invoice, expense, pricing change). Never in the daily cron.",
+   "status": "active_on_demand",
+   "invoke": "manual only"
+  }
+ }
 }
