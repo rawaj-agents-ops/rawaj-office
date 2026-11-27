@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T15:48:20.576824+02:00",
+ "updated": "2026-11-27T19:03:18.946374+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -36,24 +36,20 @@
    "preview": "**Post 1 – “Winter Wellness Tip: Hydrate for Radiant Skin”**   - **Format & Size:** Instagram/Facebook square 1080 × 1080 px (Canva “Post” t"
   },
   "scheduling": {
-   "person": "Karim",
-   "title": "Scheduling Coordinator",
    "name": "Scheduling",
-   "state": "failed",
+   "state": "done",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
-   "model": null,
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": ""
+   "model": "google/gemma-4-31b-it:free",
+   "at": "2026-11-27T19:03:18.946374+02:00",
+   "preview": "**Rawaj Global — Scheduling Deliverable (2026-11-27 Midday)**  **Goal:** Establish authority and attract clinic owners in UAE, KSA, Kuwait, "
   },
   "client_success": {
-   "person": "Hala",
-   "title": "Client Success Manager",
    "name": "Client Success",
-   "state": "failed",
+   "state": "done",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
-   "model": null,
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3.5-super-vl:free",
+   "at": "2026-11-27T19:03:18.946374+02:00",
+   "preview": "**Rawaj Global — Monthly Clinic Report Outline**  **Client:** [Clinic Name] | **Market:** [UAE / KSA / Kuwait / Qatar] | **Period:** [Month "
   },
   "lead_research": {
    "name": "Lead Research",
