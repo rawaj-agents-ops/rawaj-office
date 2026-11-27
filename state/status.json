@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T08:06:05.713823+02:00",
+ "updated": "2026-11-27T12:27:54.676726+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -12,14 +12,12 @@
    "preview": "Rawaj Global — تقرير يومي ٢٧ نوفمبر ٢٠٢٦  ملخص: البحث أنتج زاوية موسمية واعدة لكن غير موثقة، المحتوى جهز ٣ بوستات جاهزة للتصميم، والـ QA راف"
   },
   "research": {
-   "person": "Layla",
-   "title": "Market Research Analyst",
    "name": "Research",
    "state": "done",
    "task": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what",
    "model": "nvidia/nemotron-3.5-super-vl:free",
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": "**Layla — Market Research Deliverable (2026-11-27)**  **Insight: Seasonal marketing budget trigger for Gulf derma/cosmetic clinics** - **Gen"
+   "at": "2026-11-27T12:27:54.676726+02:00",
+   "preview": "**Rawaj Global — Market Research Deliverable (2026-11-27)**   **Goal:** Win first 3 paying clinic clients via ~15 outreach messages/day   **"
   },
   "content": {
    "person": "Yousef",
@@ -62,14 +60,12 @@
    "preview": ""
   },
   "lead_research": {
-   "person": "Tariq",
-   "title": "Lead Research Specialist",
    "name": "Lead Research",
-   "state": "failed",
+   "state": "done",
    "task": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arab",
-   "model": null,
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-27T12:27:54.676726+02:00",
+   "preview": "**Rawaj Global — Midday Research Deliverable (2026-11-27)**   **Goal:** Document the seasonal angle for Nov–Feb Gulf clinics; give Content &"
   },
   "qa": {
    "flagged": [],
