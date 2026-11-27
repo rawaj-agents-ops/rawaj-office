@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-27T12:27:54.676726+02:00",
+ "updated": "2026-11-27T15:48:20.576824+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -20,24 +20,20 @@
    "preview": "**Rawaj Global — Market Research Deliverable (2026-11-27)**   **Goal:** Win first 3 paying clinic clients via ~15 outreach messages/day   **"
   },
   "content": {
-   "person": "Yousef",
-   "title": "Content Lead (AR/EN)",
    "name": "Content AR/EN",
    "state": "done",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": "**Yousef — Content Deliverable (2026-11-27)**   *Rawaj Global own page | 3 posts | 0 medical claims | Hooks from Layla’s seasonal insight*  "
+   "at": "2026-11-27T15:48:20.576824+02:00",
+   "preview": "**Rawaj Global — Content Deliverable (2026-11-27 Midday)**   *3 posts | 0 medical claims | Seasonal angle: Nov–Feb “Winter Wellness & Growth"
   },
   "design": {
-   "person": "Nour",
-   "title": "Design Brief Specialist",
    "name": "Design Brief",
-   "state": "failed",
+   "state": "done",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
-   "model": null,
-   "at": "2026-11-27T08:06:05.713823+02:00",
-   "preview": ""
+   "model": "openrouter/free",
+   "at": "2026-11-27T15:48:20.576824+02:00",
+   "preview": "**Post 1 – “Winter Wellness Tip: Hydrate for Radiant Skin”**   - **Format & Size:** Instagram/Facebook square 1080 × 1080 px (Canva “Post” t"
   },
   "scheduling": {
    "person": "Karim",
