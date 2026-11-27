@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-26T19:03:50.641262+02:00",
+ "updated": "2026-11-27T08:06:05.713823+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -8,18 +8,18 @@
    "state": "done",
    "task": "daily report",
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": "إجمالًا: يوم ضعيف — المحتوى فقط سلم مخرجات، وباقي الأقسام فاضية، وQA لاقى أخطاء في كل حاجة.  **المحتوى (عمر)** — سلم 3 بوستات (عربي خليجي، ع"
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": "Rawaj Global — تقرير يومي ٢٧ نوفمبر ٢٠٢٦  ملخص: البحث أنتج زاوية موسمية واعدة لكن غير موثقة، المحتوى جهز ٣ بوستات جاهزة للتصميم، والـ QA راف"
   },
   "research": {
    "person": "Layla",
    "title": "Market Research Analyst",
    "name": "Research",
-   "state": "failed",
+   "state": "done",
    "task": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what",
-   "model": null,
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3.5-super-vl:free",
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": "**Layla — Market Research Deliverable (2026-11-27)**  **Insight: Seasonal marketing budget trigger for Gulf derma/cosmetic clinics** - **Gen"
   },
   "content": {
    "person": "Yousef",
@@ -28,8 +28,8 @@
    "state": "done",
    "task": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 ",
    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": "**Rawaj Global — Social Content Pack (2026-11-26)**  ---  ### Post 1 — Gulf Arabic (Rawaj Page) **Hook:**   \"تعبان من ليدز تروح هدر؟ 🤷‍♂️\"  "
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": "**Yousef — Content Deliverable (2026-11-27)**   *Rawaj Global own page | 3 posts | 0 medical claims | Hooks from Layla’s seasonal insight*  "
   },
   "design": {
    "person": "Nour",
@@ -38,24 +38,28 @@
    "state": "failed",
    "task": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mo",
    "model": null,
-   "at": "2026-11-26T17:51:13.969138+02:00",
+   "at": "2026-11-27T08:06:05.713823+02:00",
    "preview": ""
   },
   "scheduling": {
+   "person": "Karim",
+   "title": "Scheduling Coordinator",
    "name": "Scheduling",
-   "state": "done",
+   "state": "failed",
    "task": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best",
-   "model": "google/gemma-4-31b-it:free",
-   "at": "2026-11-26T19:03:50.641262+02:00",
-   "preview": "**Rawaj Global — 7-Day Posting Plan (Nov 26 – Dec 02)** *Target Audience: Clinic Owners/Medical Directors (GCC)* *Timezone: GST (Gulf Standa"
+   "model": null,
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": ""
   },
   "client_success": {
+   "person": "Hala",
+   "title": "Client Success Manager",
    "name": "Client Success",
-   "state": "done",
+   "state": "failed",
    "task": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a m",
-   "model": "nvidia/nemotron-3.5-super-vl:free",
-   "at": "2026-11-26T19:03:50.641262+02:00",
-   "preview": "**Rawaj Global — Monthly Clinic Report Outline**  **Clinic:** ____________________   **Reporting Period:** ____________________   **Prepared"
+   "model": null,
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": ""
   },
   "lead_research": {
    "person": "Tariq",
@@ -64,26 +68,19 @@
    "state": "failed",
    "task": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arab",
    "model": null,
-   "at": "2026-11-26T17:51:13.969138+02:00",
+   "at": "2026-11-27T08:06:05.713823+02:00",
    "preview": ""
   },
   "qa": {
-   "flagged": [
-    "research",
-    "content",
-    "design",
-    "scheduling",
-    "client_success",
-    "lead_research"
-   ],
+   "flagged": [],
    "person": "Mariam",
    "title": "QA Lead",
    "name": "QA",
-   "state": "done",
+   "state": "failed",
    "task": "review",
-   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
-   "at": "2026-11-26T17:51:13.969138+02:00",
-   "preview": "research: FIX — No output provided for review.   content: FIX — Post 2 makes an unverified quantitative claim (“تقلل الغياب 30-40%”) that so"
+   "model": null,
+   "at": "2026-11-27T08:06:05.713823+02:00",
+   "preview": ""
   }
  }
 }
