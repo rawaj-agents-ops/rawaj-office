@@ -14,11 +14,6 @@ PRIORITY = {
  "manager": [ULTRA, GEMMA, ERNIE, SUPER],
  "qa": [ULTRA, GEMMA, SUPER, ERNIE],
  "content": [ULTRA, GEMMA, ERNIE, SUPER],
- "lead_research": [GEMMA, ULTRA, ERNIE, LING],
- "research": [GEMMA, ERNIE, SUPER, LING],
- "design": [ERNIE, GEMMA, LING, G26],
- "scheduling": [LING, GEMMA, ERNIE, G26],
- "client_success": [SUPER, GEMMA, LING, "openrouter/free"],
 }
 now = datetime.datetime.now(ZoneInfo("Africa/Cairo"))
 today = now.strftime("%Y-%m-%d")
@@ -81,7 +76,7 @@ if not news_ok:
     json.dump({"updated": now.isoformat(), "news": "missing", "agents": {"manager": {"person": cfg["manager"]["person"], "title": cfg["manager"]["title"], "name": "Manager", "state": "skipped", "task": "no news input today", "model": None, "at": now.isoformat(), "preview": "no news input"}}}, open("state/status.json", "w"), ensure_ascii=False, indent=1)
     sys.exit(0)
 
-PULSES = {"30 9 * * *": ["research", "lead_research"], "30 12 * * *": ["content", "design"], "0 16 * * *": ["scheduling", "client_success"]}
+PULSES = {"30 12 * * *": ["content"]}
 pulse = PULSES.get(os.environ.get("SCHEDULE_CRON", ""))
 if pulse:
     st = json.load(open("state/status.json")) if os.path.exists("state/status.json") else {"agents": {}}
@@ -109,7 +104,7 @@ MEM_ON = os.path.exists("state/memory_on.txt")
 mem = open("state/memory.md").read()[-3000:] if MEM_ON and os.path.exists("state/memory.md") else ""
 if mem:
     roster += "\n\nPrevious days (learn from it, do not repeat mistakes or offers):\n" + mem
-plan, pm = call(f"You are {PERSON['manager']}, the {cfg['manager']['title']} at {cfg['company']}\nTeam:\n{roster}\n\nNobody on the team can browse the internet. The only facts allowed today are the news items below.\n\n{NEWS_BLOCK}", f"Date: {today}. Write today's short plan (max 130 words) in Egyptian Arabic: which story leads and why, one concrete job per department, how their outputs feed each other, and what to avoid duplicating. Plain text.", "manager")
+plan, pm = call(f"You are {PERSON['manager']}, the {cfg['manager']['title']} at {cfg['company']}\nTeam:\n{roster}\n\nNobody on the team can browse the internet. The only facts allowed today are the news items below.\n\n{NEWS_BLOCK}", f"Date: {today}. Write today's short plan (max 90 words) in Egyptian Arabic: which story leads and why, what Yousef writes and what Mariam checks, and what to avoid. Plain text.", "manager")
 plan = plan or "No plan today. Each agent works from its role and stays consistent with teammates' outputs."
 os.makedirs("out", exist_ok=True)
 open(f"out/{today}-plan.md", "w").write(plan)
@@ -141,8 +136,8 @@ status["qa"] = {"flagged": flagged, "person": PERSON["qa"], "title": cfg["qa"]["
 qa_text = qa if qa else "QA did not run today: the free models failed before the review, so nothing was fact-checked."
 attrib = "; ".join(f"{k} = {next((x['person'] for x in cfg['agents'] if x['id']==k), PERSON.get(k, k))}" for k in outputs if outputs[k])
 rep, rm = call(
-    f"You are {PERSON['manager']}, the {cfg['manager']['title']} at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic (عامية مصرية), short and honest. Refer to each employee by first name (Omar, Layla, Yousef, Nour, Karim, Hala, Tariq, Mariam) with their role, names in English letters. The page is a short-video tech and AI news page on Instagram Reels and TikTok, fronted by an AI anchor; the founder posts everything himself, nothing is published automatically.\n"
-    "Structure: 1) سطر واحد ملخص للي حصل النهارده، 2) الأخبار اللي اشتغلنا عليها النهارده: كل خبر بسطر ومصدره، 3) الفيديو الجاهز: الهوك، ملخص السكربت في ٣ سطور، والكابشن، 4) البريف البصري في سطرين، 5) خطة النشر بكرة، 6) رأي مریم (QA): PASS ولا FIX وإيه المشكلة، 7) أهم ٣ حاجات يعملها هو النهارده (أولها ينشر الفيديو من حسابه)، 8) قسم اسمه محتاجين قرارك فيه كل سطر FLAG: من الشغل أو من QA كسؤال قصير ليه (اكتب مفيش لو مفيش).\n"
+    f"You are {PERSON['manager']}, the {cfg['manager']['title']} at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic (عامية مصرية), short and honest. Refer to each employee by first name (Omar, Yousef, Mariam) with their role, names in English letters. The team is only these three. The page is a short-video tech and AI news page on Instagram Reels and TikTok, fronted by an AI anchor; the founder posts everything himself, nothing is published automatically.\n"
+    "Structure: 1) سطر واحد ملخص للي حصل النهارده، 2) الأخبار اللي اشتغلنا عليها النهارده: كل خبر بسطر ومصدره، 3) السكربت الجاهز: الهوك، ملخص السكربت في ٣ سطور، والكابشن، 4) رأي مریم (QA): PASS ولا FIX وإيه المشكلة، 5) أهم ٣ حاجات يعملها هو النهارده (أولها ينشر الفيديو من حسابه)، 6) قسم اسمه محتاجين قرارك فيه كل سطر FLAG: من الشغل أو من QA كسؤال قصير ليه (اكتب مفيش لو مفيش).\n"
     "Attribute every department output to the person whose id labels it, exactly like this: " + attrib + ". If QA did not run, say plainly that nothing was fact-checked today and do not describe any QA verdict.\n"
     "Plain text, no markdown symbols. Be honest: say when a department failed or when a claim is unverified, and never invent news or numbers. Never promise follower counts or results." + ("\nIf the founder pasted performance numbers today, add a short weekly review: what to repeat and what to drop, using only his numbers." if PERF else ""),
     "Date: " + today + "\n\n" + NEWS_BLOCK + "\n\nDepartment outputs:\n\n" + bundle + "\n\nQA review:\n" + qa_text, "manager")
