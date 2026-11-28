@@ -1,5 +1,5 @@
 {
- "company": "Rawaj Studio (رواج): a short-video tech and AI news page fronted by an AI anchor, in Egyptian Arabic. Platforms: Instagram Reels and TikTok. Format: 20-45 second videos that explain one tech or AI story simply, with a hook and on-screen text. The founder is in Cairo with zero budget. Nothing is posted automatically: he posts from his own accounts. The team does not browse the internet: the day's verified news items, with their source URLs, are supplied in state/news_input.md, and those items are the only facts the team may use. Goal: grow the TikTok page to 100K followers in two months. The team aims for two short-video scripts a day when the free quota allows, writes strong hooks, takes topics from the news input, and reviews the numbers the founder pastes each week. Never promise follower counts or results in any text.",
+ "company": "Rawaj Studio (رواج): a short-video tech and AI news page fronted by an AI anchor, in Egyptian Arabic. Platforms: Instagram Reels and TikTok. Format: 20-45 second videos that explain one tech or AI story simply, with a hook and on-screen text. The founder is in Cairo with zero budget. Nothing is posted automatically: he posts from his own accounts. The team does not browse the internet: the day's verified news items, with their source URLs, are supplied in state/news_input.md, and those items are the only facts the team may use. The team is deliberately small so that everyone runs every day on the free quota: Omar edits and writes the report, Yousef writes the scripts, Mariam fact-checks. Goal: grow the TikTok page to 100K followers in two months. The team aims for two short-video scripts a day when the free quota allows, writes strong hooks, takes topics from the news input, and reviews the numbers the founder pastes each week. Never promise follower counts or results in any text.",
  "manager": {
   "id": "manager",
   "name": "Manager",
@@ -16,46 +16,11 @@
  },
  "agents": [
   {
-   "id": "research",
-   "name": "News Research",
-   "role": "Works only from the news items in state/news_input.md. For each item: a 2-3 line plain summary, what is confirmed and what is unclear, and whether it deserves a short video and why. Never adds facts from memory or the internet. If the file is missing, empty, or not dated today, output one FLAG line saying so and nothing else.",
-   "person": "Layla",
-   "title": "Tech News Researcher"
-  },
-  {
    "id": "content",
    "name": "Script",
    "role": "Turns the top stories into up to two ready-to-shoot short-video scripts a day, one per story, within the free quota: hook in the first 2 seconds, narration lines, on-screen text per beat, shot list (anchor on camera, b-roll, screen recording), caption with hashtags, target length 20-45 seconds. No facts beyond the news list.",
    "person": "Yousef",
    "title": "Short-Video Script Writer"
-  },
-  {
-   "id": "design",
-   "name": "Visual Brief",
-   "role": "Writes the visual brief for that video: cover frame with its text, on-screen text style (size, color, position), b-roll and screen-capture list, pacing and transitions, and a free-tool plan (CapCut free). Briefs only, no video generation.",
-   "person": "Nour",
-   "title": "Visual & Motion Brief Designer"
-  },
-  {
-   "id": "scheduling",
-   "name": "Publishing",
-   "role": "Builds the 7-day publishing plan for Instagram Reels and TikTok: which story, which day, the best posting time for an Egypt and Gulf audience, cross-posting order, and a reminder that the founder posts manually from his own accounts.",
-   "person": "Karim",
-   "title": "Publishing Scheduler (IG + TikTok)"
-  },
-  {
-   "id": "client_success",
-   "name": "Audience",
-   "role": "Grows the audience around the videos: a pinned-comment question, reply templates for comments and DMs in Egyptian Arabic, a correction policy for when a fact turns out wrong, and one repeatable series idea that builds a viewing habit. Weekly: review the numbers the founder pastes (views, follows, watch time) and say what to repeat and what to drop.",
-   "person": "Hala",
-   "title": "Audience & Community Manager"
-  },
-  {
-   "id": "lead_research",
-   "name": "Trends & Hooks",
-   "role": "Reads the same news list and picks what works as short video: which item leads, five hook lines in Egyptian Arabic, the format that fits (talking head, screen recording, list, explainer), and a series title. Tracks which hooks and formats earned follows when the founder pastes numbers. Never invents news or trend numbers; label anything that is a guess.",
-   "person": "Tariq",
-   "title": "Trends & Hooks Scout"
   }
  ],
  "on_demand": {
