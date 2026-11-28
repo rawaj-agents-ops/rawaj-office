@@ -19,6 +19,7 @@ for k, a in cfg.get("on_demand", {}).items(): PEOPLE[k] = a
 CID = open("state/chat_id.txt").read().strip()
 status = json.load(open("state/status.json")).get("agents", {}) if os.path.exists("state/status.json") else {}
 mem = open("state/memory.md", encoding="utf-8").read()[-1500:] if os.path.exists("state/memory.md") else ""
+news = open("state/news_input.md", encoding="utf-8").read()[-1200:] if os.path.exists("state/news_input.md") else ""
 def tg(method, **p):
     req = urllib.request.Request(f"https://api.telegram.org/bot{TG}/{method}", json.dumps(p).encode(), {"Content-Type": "application/json"})
     with urllib.request.urlopen(req, timeout=60) as r: return json.load(r)
@@ -29,6 +30,7 @@ def model_reply(aid, msgs):
       f"You are chatting directly with the founder (the boss) on Telegram. Stay in character as {p['person']}. Reply in Egyptian Arabic (عامية مصرية) unless he writes in English. Be short, warm and concrete (2 to 6 sentences).\n"
       "Never invent facts, numbers, results or work you did not do. Only describe your work from the context below; if you do not know or have not done something, say so plainly and offer what you can do in your next run. You are an AI employee: never claim to have done things outside your own work, browsed the web, or contacted anyone.\n\n"
       f"Your latest recorded work: state={st.get('state','no run yet')}, task={st.get('task','-')}, model={st.get('model','-')}, output preview: {st.get('preview','-')}\n"
+      f"Today's news input (the only facts you may use about the news; if it is empty, say no news was fed in today):\n{news or '(nothing fed in today)'}\n\n"
       f"Recent company memory:\n{mem or '(none)'}")
     last = None
     for m in MODELS.get(aid, DEFAULT) + ["openrouter/free"]:
