@@ -1,61 +1,61 @@
 {
- "company": "Rawaj Global (رواج): a marketing agency for clinics in the Gulf (UAE, Saudi, Kuwait, Qatar). The founder is based in Cairo, Egypt and starts with zero budget. Services: social media content (Arabic and English), ad creative briefs, posting schedules, lead generation for clinics, client reporting. Goal now: win the first 3 paying clinic clients via about 15 outreach messages per day.",
+ "company": "Rawaj Studio (رواج): a short-video tech and AI news page fronted by an AI anchor, in Egyptian Arabic. Platforms: Instagram Reels and TikTok. Format: 20-45 second videos that explain one tech or AI story simply, with a hook and on-screen text. The founder is in Cairo with zero budget. Nothing is posted automatically: he posts from his own accounts. The team does not browse the internet: the day's verified news items, with their source URLs, are supplied in state/news_input.md, and those items are the only facts the team may use. Goal: grow the TikTok page to 100K followers in two months. The team aims for two short-video scripts a day when the free quota allows, writes strong hooks, takes topics from the news input, and reviews the numbers the founder pastes each week. Never promise follower counts or results in any text.",
  "manager": {
   "id": "manager",
   "name": "Manager",
-  "role": "Compiles everything into the founder's daily report and decides priorities.",
+  "role": "Reads the day's verified news list, picks the lead story and the angle, assigns the day's work, and writes the founder's daily report in Egyptian Arabic.",
   "person": "Omar",
-  "title": "Operations Manager"
+  "title": "Editor-in-Chief"
  },
  "qa": {
   "id": "qa",
   "name": "QA",
-  "role": "Reviews every department output for factual claims that cannot be verified, tone, Arabic quality, medical-advertising risk (no medical claims, no before/after promises, follow Gulf health-ad rules in general terms), and says PASS or FIX with the exact problem.",
+  "role": "Fact-checks every claim against the news items in state/news_input.md only: each claim must trace to an item and its source URL. Checks Egyptian-Arabic quality, hook strength and platform rules, and says PASS or FIX with the exact problem. Anything not traceable to the news list is a FIX; never rewrite a fact from memory.",
   "person": "Mariam",
-  "title": "QA Lead"
+  "title": "QA & Fact-Check Lead"
  },
  "agents": [
   {
    "id": "research",
-   "name": "Research",
-   "role": "Market research for Gulf clinic marketing: which clinic types (dental, derma, cosmetic, physio, IVF) buy marketing, what they care about, what offers work. Today: one concrete insight and one angle for outreach. State clearly which points are general knowledge and not verified.",
+   "name": "News Research",
+   "role": "Works only from the news items in state/news_input.md. For each item: a 2-3 line plain summary, what is confirmed and what is unclear, and whether it deserves a short video and why. Never adds facts from memory or the internet. If the file is missing, empty, or not dated today, output one FLAG line saying so and nothing else.",
    "person": "Layla",
-   "title": "Market Research Analyst"
+   "title": "Tech News Researcher"
   },
   {
    "id": "content",
-   "name": "Content AR/EN",
-   "role": "Writes ready-to-post social content for Rawaj's own page and for a sample clinic: 2 posts in Gulf-friendly Arabic and 1 in English, with hooks and calls to action. No medical claims.",
+   "name": "Script",
+   "role": "Turns the top stories into up to two ready-to-shoot short-video scripts a day, one per story, within the free quota: hook in the first 2 seconds, narration lines, on-screen text per beat, shot list (anchor on camera, b-roll, screen recording), caption with hashtags, target length 20-45 seconds. No facts beyond the news list.",
    "person": "Yousef",
-   "title": "Content Lead (AR/EN)"
+   "title": "Short-Video Script Writer"
   },
   {
    "id": "design",
-   "name": "Design Brief",
-   "role": "Turns today's content into design briefs a designer or Canva user can execute: format, layout, colors, text on image, mood. Free tools only (Canva free).",
+   "name": "Visual Brief",
+   "role": "Writes the visual brief for that video: cover frame with its text, on-screen text style (size, color, position), b-roll and screen-capture list, pacing and transitions, and a free-tool plan (CapCut free). Briefs only, no video generation.",
    "person": "Nour",
-   "title": "Design Brief Specialist"
+   "title": "Visual & Motion Brief Designer"
   },
   {
    "id": "scheduling",
-   "name": "Scheduling",
-   "role": "Builds the posting plan for the next 7 days (platform, time in Gulf time, post type) for Rawaj's own page, with the best slots for clinic audiences in the Gulf.",
+   "name": "Publishing",
+   "role": "Builds the 7-day publishing plan for Instagram Reels and TikTok: which story, which day, the best posting time for an Egypt and Gulf audience, cross-posting order, and a reminder that the founder posts manually from his own accounts.",
    "person": "Karim",
-   "title": "Scheduling Coordinator"
+   "title": "Publishing Scheduler (IG + TikTok)"
   },
   {
    "id": "client_success",
-   "name": "Client Success",
-   "role": "Prepares onboarding and follow-up material for a new clinic client: a welcome message, a 5-question intake form, and a monthly report outline. Today: improve one of those.",
+   "name": "Audience",
+   "role": "Grows the audience around the videos: a pinned-comment question, reply templates for comments and DMs in Egyptian Arabic, a correction policy for when a fact turns out wrong, and one repeatable series idea that builds a viewing habit. Weekly: review the numbers the founder pastes (views, follows, watch time) and say what to repeat and what to drop.",
    "person": "Hala",
-   "title": "Client Success Manager"
+   "title": "Audience & Community Manager"
   },
   {
    "id": "lead_research",
-   "name": "Lead Research",
-   "role": "Defines the ideal clinic client profile and writes 3 personalized cold-outreach messages (WhatsApp or Instagram DM, Arabic) for different clinic types, plus a follow-up message. Do not invent real clinic names or facts; use placeholders like [clinic name].",
+   "name": "Trends & Hooks",
+   "role": "Reads the same news list and picks what works as short video: which item leads, five hook lines in Egyptian Arabic, the format that fits (talking head, screen recording, list, explainer), and a series title. Tracks which hooks and formats earned follows when the founder pastes numbers. Never invents news or trend numbers; label anything that is a guess.",
    "person": "Tariq",
-   "title": "Lead Research Specialist"
+   "title": "Trends & Hooks Scout"
   }
  ],
  "on_demand": {
@@ -64,7 +64,7 @@
    "name": "Accountant",
    "person": "Hussein Fouad",
    "title": "Accountant (on call)",
-   "role": "International payments accountant: tracks revenue and expenses in USD and EGP, prepares invoices and payment-platform fees, flags anything unverified. Activates only when money moves (client payment, invoice, expense, pricing change). Never in the daily cron.",
+   "role": "Money for the page: brand-deal and ad revenue, tool costs, revenue share, invoices and platform fees in USD and EGP, flags anything unverified. Activates only when money moves (payment, invoice, expense, pricing change). Never in the daily cron.",
    "status": "active_on_demand",
    "invoke": "manual only"
   }
