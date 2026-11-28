@@ -138,11 +138,14 @@ qa, qm = call(f"You are {PERSON['qa']}, the {cfg['qa']['title']} at {cfg['compan
 import re
 flagged = [x["id"] for x in cfg["agents"] if qa and re.search(re.escape(x["id"]) + r"\W{0,12}FIX", qa, re.I)] if isinstance(cfg.get("agents"), list) else []
 status["qa"] = {"flagged": flagged, "person": PERSON["qa"], "title": cfg["qa"]["title"], "name": "QA", "state": "done" if qa else "failed", "task": "review", "model": qm, "at": now.isoformat(), "preview": (qa or "")[:140].replace("\n"," ")}
+qa_text = qa if qa else "QA did not run today: the free models failed before the review, so nothing was fact-checked."
+attrib = "; ".join(f"{k} = {next((x['person'] for x in cfg['agents'] if x['id']==k), PERSON.get(k, k))}" for k in outputs if outputs[k])
 rep, rm = call(
     f"You are {PERSON['manager']}, the {cfg['manager']['title']} at {cfg['company']}\nWrite the founder's daily report in Egyptian Arabic (عامية مصرية), short and honest. Refer to each employee by first name (Omar, Layla, Yousef, Nour, Karim, Hala, Tariq, Mariam) with their role, names in English letters. The page is a short-video tech and AI news page on Instagram Reels and TikTok, fronted by an AI anchor; the founder posts everything himself, nothing is published automatically.\n"
     "Structure: 1) سطر واحد ملخص للي حصل النهارده، 2) الأخبار اللي اشتغلنا عليها النهارده: كل خبر بسطر ومصدره، 3) الفيديو الجاهز: الهوك، ملخص السكربت في ٣ سطور، والكابشن، 4) البريف البصري في سطرين، 5) خطة النشر بكرة، 6) رأي مریم (QA): PASS ولا FIX وإيه المشكلة، 7) أهم ٣ حاجات يعملها هو النهارده (أولها ينشر الفيديو من حسابه)، 8) قسم اسمه محتاجين قرارك فيه كل سطر FLAG: من الشغل أو من QA كسؤال قصير ليه (اكتب مفيش لو مفيش).\n"
+    "Attribute every department output to the person whose id labels it, exactly like this: " + attrib + ". If QA did not run, say plainly that nothing was fact-checked today and do not describe any QA verdict.\n"
     "Plain text, no markdown symbols. Be honest: say when a department failed or when a claim is unverified, and never invent news or numbers. Never promise follower counts or results." + ("\nIf the founder pasted performance numbers today, add a short weekly review: what to repeat and what to drop, using only his numbers." if PERF else ""),
-    "Date: " + today + "\n\n" + NEWS_BLOCK + "\n\nDepartment outputs:\n\n" + bundle + "\n\nQA review:\n" + (qa or "QA failed"), "manager")
+    "Date: " + today + "\n\n" + NEWS_BLOCK + "\n\nDepartment outputs:\n\n" + bundle + "\n\nQA review:\n" + qa_text, "manager")
 status["manager"] = {"person": PERSON["manager"], "title": cfg["manager"]["title"], "name": "Manager", "state": "done" if rep else "failed", "task": "daily report", "model": rm, "at": now.isoformat(), "preview": (rep or "")[:140].replace("\n"," ")}
 if MEM_ON:
     line = f"\n## {today}\nQA flagged: {', '.join(flagged) or 'none'}. Summary: {(rep or '')[:350]}\n"
