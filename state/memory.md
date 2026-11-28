@@ -1,23 +1,4 @@
+## 2026-11-28 — pivot
+Rawaj Studio is now a short-video tech and AI news page: Instagram Reels and TikTok, fronted by an AI anchor, in Egyptian Arabic. The clinic-marketing business is archived in state/memory_clinic_archive.md and is no longer the work.
 
-## 2026-11-26
-QA flagged: none. Summary: 
-
-## 2026-11-26
-QA flagged: none. Summary: ملخص اليوم: خلصنا حزمة محتوى للصفحة وزاوية تواصل مبنية على "تدقيق جودة الليدز"، لكن البحث مش موثق ومراجعة الجودة فشلت.
-
-أبحاث (عمر — Research Lead): أنتج رؤية عامة غير موثقة إن عيادات الأسنان أعلى تخصص في نية التسويق المدفوع وألمها الرئيسي لايدز رديئة ونو-شو، وزاوية تواصل عملية "تدقيق جودة الليدز مش نمو". أفضل حاجة: زاوية التواصل جاهزة للتطبيق فورا
-
-## 2026-11-26
-QA flagged: research, content, design, scheduling, client_success, lead_research. Summary: إجمالًا: يوم ضعيف — المحتوى فقط سلم مخرجات، وباقي الأقسام فاضية، وQA لاقى أخطاء في كل حاجة.
-
-**المحتوى (عمر)** — سلم 3 بوستات (عربي خليجي، عينة عيادة أسنان، إنجلش) وأفضلهم البوست الأول لصفحة رواج لأنه واضح، مباشر، وCTA بسيطة.  
-**البحث (ليلى)** — مفيش أي مخرجات اليوم.  
-**التصميم (يوسف / نور)** — مفيش أي مخرجات اليوم.  
-**الجدولة (كريم)** — مفيش أي
-
-## 2026-11-27
-QA flagged: none. Summary: Rawaj Global — تقرير يومي ٢٧ نوفمبر ٢٠٢٦
-
-ملخص: البحث أنتج زاوية موسمية واعدة لكن غير موثقة، المحتوى جهز ٣ بوستات جاهزة للتصميم، والـ QA رافض النشر.
-
-البحث — ليلى (Market Research): أنتجت insight موسمي عن زيادة ميزانيات عيادات الجلدية والتجميل في الخليج من أواخر نوفمبر لفبراير، وزاوية تواصل "جاهزية الشتاء". أفضل عنصر: رسالة الـ DM المقترحة لتارق تر
+Rules that still hold: the team does not browse the internet; the only facts are the items in state/news_input.md with their sources, and anything else is FLAG. Nothing is posted automatically, the founder posts from his own accounts. Free models only, and the scarce quota goes first to the editor, QA and the script writer.
