@@ -1,4 +1,4 @@
-# Rawaj Studio — daily news input
+# Rawaj Studio: daily news input
 
 The 08:10 Cairo run reads this file. Every fact in a script, brief or caption must come from these items only.
 
