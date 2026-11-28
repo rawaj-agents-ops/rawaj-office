@@ -2,7 +2,7 @@
 
 DATE: 2026-11-28
 
-Lead suggested by the owner: ITEM 1.
+Suggested lead (from the office, not the founder): ITEM 1.
 
 ITEM 1
 headline: OpenAI countersues Apple, alleging trade secret theft
