@@ -30,7 +30,7 @@ DEAD = {"n": 0}
 def call(system, user, aid="research"):
     if DEAD["n"] >= 2 and aid not in ("manager", "qa"):
         print("quota looks exhausted: skipping", aid, file=sys.stderr); return None, None
-    for m in PRIORITY.get(aid, PRIORITY["research"]) + [LIGHT, "openrouter/free"]:
+    for m in PRIORITY.get(aid, PRIORITY["content"]) + [LIGHT, "openrouter/free"]:
         for attempt in range(1):
             try:
                 body = json.dumps({"model": m, "messages": [{"role": "system", "content": system}, {"role": "user", "content": user}], "max_tokens": 1500}).encode()
@@ -69,10 +69,13 @@ if not news_ok:
             "ابعتلي الأخبار بمصادرها وأنا أشغل الفريق.")
     _sent = f"state/sent-{today}"
     if not os.path.exists(_sent):
-        _cid = chat_id() if "chat_id" in globals() else None
-        if _cid:
-            print("no news: telegram sent:", tg("sendMessage", chat_id=_cid, text=_msg).get("ok"))
-            open(_sent, "w").write("ok")
+        try:
+            _cid = chat_id()
+            if _cid:
+                print("no news: telegram sent:", tg("sendMessage", chat_id=_cid, text=_msg).get("ok"))
+                open(_sent, "w").write("ok")
+        except Exception as e:
+            print("could not send the no-news note:", e, file=sys.stderr)
     json.dump({"updated": now.isoformat(), "news": "missing", "agents": {"manager": {"person": cfg["manager"]["person"], "title": cfg["manager"]["title"], "name": "Manager", "state": "skipped", "task": "no news input today", "model": None, "at": now.isoformat(), "preview": "no news input"}}}, open("state/status.json", "w"), ensure_ascii=False, indent=1)
     sys.exit(0)
 
