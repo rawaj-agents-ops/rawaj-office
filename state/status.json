@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-28T09:05:24.984756+02:00",
+ "updated": "2026-11-28T12:17:36.021184+02:00",
  "agents": {
   "manager": {
    "person": "Omar",
@@ -12,13 +12,11 @@
    "preview": "ملخص النهارده: Omar (Editor-in-Chief) اختار ITEM 1 بس، Layla (Content) كتبت سكربت ٣٠ ثانية عن دعوى OpenAI ضد Apple، Mariam (QA) رافضته ومش ج"
   },
   "research": {
-   "person": "Layla",
-   "title": "Tech News Researcher",
    "name": "News Research",
    "state": "failed",
    "task": "Works only from the news items in state/news_input.md. For each item: a 2-3 line plain summary, what is confirmed and wh",
    "model": null,
-   "at": "2026-11-28T09:05:24.984756+02:00",
+   "at": "2026-11-28T12:17:36.021184+02:00",
    "preview": ""
   },
   "content": {
@@ -62,14 +60,12 @@
    "preview": ""
   },
   "lead_research": {
-   "person": "Tariq",
-   "title": "Trends & Hooks Scout",
    "name": "Trends & Hooks",
-   "state": "failed",
+   "state": "done",
    "task": "Reads the same news list and picks what works as short video: which item leads, five hook lines in Egyptian Arabic, the ",
-   "model": null,
-   "at": "2026-11-28T09:05:24.984756+02:00",
-   "preview": ""
+   "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+   "at": "2026-11-28T12:17:36.021184+02:00",
+   "preview": "**Tariq — Midday Trends & Hooks Deliverable**   **Date:** 2026-11-28    **Lead Item:** ITEM 1 (OpenAI ↔ Apple) — but pivot the angle from \"l"
   },
   "qa": {
    "flagged": [],
