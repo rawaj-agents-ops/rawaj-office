@@ -23,15 +23,10 @@ import {OrbitControls} from "three/addons/controls/OrbitControls.js";
 const BOT="My_company_rawaj_bot";
 const AG0=[
  {id:"manager",c:0x6c3483,skin:0xd2a679,hair:0x1c1410,style:"short",pants:0x2c3e50},
- {id:"research",c:0x2e86c1,skin:0xe8bf98,hair:0x2a1a12,style:"long",pants:0x34495e},
  {id:"content",c:0xe67e22,skin:0xc99467,hair:0x120d0a,style:"cap",pants:0x3b3b3b},
- {id:"design",c:0xd63384,skin:0xf0cba8,hair:0x5a3825,style:"ponytail",pants:0x2c3e50},
- {id:"scheduling",c:0x138d75,skin:0xb98558,hair:0x22160f,style:"short",pants:0x424949},
- {id:"client_success",c:0x229954,skin:0xe3b48c,hair:0xf2eee6,style:"hijab",pants:0x2c3e50},
- {id:"lead_research",c:0xc0392b,skin:0xd9a577,hair:0x30201a,style:"short",pants:0x1f2d3d},
  {id:"qa",c:0x7f8c8d,skin:0xeac39e,hair:0x6d4c41,style:"hijab",pants:0x2c3e50},
  {id:"accountant",c:0x1a5276,skin:0xc99467,hair:0x1c1410,style:"short",pants:0x2c3e50,od:true}];
-const TITLES={manager:["Omar","Editor-in-Chief"],research:["Layla","Tech News Researcher"],content:["Yousef","Short-Video Script Writer"],design:["Nour","Visual & Motion Brief Designer"],scheduling:["Karim","Publishing Scheduler (IG + TikTok)"],client_success:["Hala","Audience & Community Manager"],lead_research:["Tariq","Trends & Hooks Scout"],qa:["Mariam","QA & Fact-Check Lead"],accountant:["Hussein Fouad","Accountant (on call)"]};
+const TITLES={manager:["Omar","Editor-in-Chief"],content:["Yousef","Short-Video Script Writer"],qa:["Mariam","QA & Fact-Check Lead"],accountant:["Hussein Fouad","Accountant (on call)"]};
 const AG=AG0.map(a=>({...a,name:TITLES[a.id][0],title:TITLES[a.id][1],n:TITLES[a.id][0]+" · "+TITLES[a.id][1]}));
 const COL={done:0x2ecc71,failed:0xe74c3c,working:0xf1c40f,idle:0x7f8c8d};
 let renderer;
@@ -97,6 +92,10 @@ AG.forEach((a,i)=>{const col=i%4,row=Math.floor(i/4);const d=a.od?1:(row===0?-1:
  cyl(0.06,0.05,0.1,0xffffff,bx-0.9,1.02,dz,8);
  a.scr=scr;a.bx=bx;a.bz=bz;a.dz=dz;
  chair(bx,bz-d*0.85,d<0?0:Math.PI);});
+// empty desks for the seats the smaller team does not use
+[[2.4,-3],[-8.4,3],[-4.8,3],[-1.2,3],[2.4,3]].forEach(([bx,bz])=>{const d=bz<0?-1:1;const dz=bz+d*0.4;
+ box(2.4,0.08,1.2,0xb58b5a,bx,0.92,dz);box(0.08,0.9,1.1,0x4a3320,bx-1.1,0.45,dz);box(0.08,0.9,1.1,0x4a3320,bx+1.1,0.45,dz);
+ box(0.95,0.58,0.05,0x15181d,bx,1.42,dz+d*0.32);chair(bx,bz-d*0.85,d<0?0:Math.PI);});
 // figures
 const gTh=new THREE.BoxGeometry(0.2,0.45,0.2),gSh=new THREE.BoxGeometry(0.17,0.45,0.17),gUa=new THREE.BoxGeometry(0.14,0.3,0.14),gFa=new THREE.BoxGeometry(0.12,0.28,0.12),gTo=new THREE.BoxGeometry(0.56,0.64,0.32),gHd=new THREE.SphereGeometry(0.2,16,12),gHand=new THREE.SphereGeometry(0.07,8,6);
 function mk(g,mat,x,y,z,p){const m=new THREE.Mesh(g,mat);m.position.set(x,y,z);m.castShadow=true;p.add(m);return m}
